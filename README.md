@@ -1,8 +1,11 @@
 # Software-Group-Test
 These programs are coded by Chen Sixiang.   
 初一学习信竞时与好朋友讨论完成了程序的雏形  
-在高中本人再次完善改进
+在高中本人再次完善改进 `Typer.rar` 里面为成品
+剩下的文件是调试和改进优化的过程  
+主要用的是 `WINAPI` 中模拟键盘事件和鼠标事件的函数
 
+# Typer
 ## 1. 程序介绍
 目的是读取输入字符，将其转换为特定的 C++ 代码，并将生成的代码写入文件。随后，使用 gcc 编译生成的代码文件并运行生成的可执行文件。达到快速输入的效果，薄纱金山打字通。
 
@@ -22,7 +25,8 @@ These programs are coded by Chen Sixiang.
 4. **编译和执行**：
    - `system("cmd /c gcc ou.cpp -o ou");` 使用 `gcc` 编译生成的 `ou.cpp` 文件并生成可执行文件 `ou.exe`。
    - `WinExec("cmd /c start ou.exe", SW_HIDE);` 以隐藏模式启动生成的可执行文件 `ou.exe`。
-   - `system("pause");` 暂停程序，以便用户查看结果。`change()` 函数对每个字符执行条件判断，根据字符的类型（换行符、符号、字母、数字等），生成如 `symbol('X');` 这样的代码并输出。
+   - `system("pause");` 暂停程序，以便用户查看结果。
+   - `change()` 函数对每个字符执行条件判断，根据字符的类型（换行符、符号、字母、数字等），生成如 `symbol('X');` 这样的代码并输出。
 
    其中判断的字符有：
    - 换行符 (`'\n'`)
@@ -31,7 +35,7 @@ These programs are coded by Chen Sixiang.
    - 小写字母 (`c >= 97 && c <= 122`)
    - 大写字母 (`c >= 65 && c <= 90`)
 
-5. **type.h**  
+5. **type.h头文件**  
    其中 `symbol()` 用于模拟键盘按键事件来输入字符和符号，在 `ou.cpp` 中调用编译生成程序。
 - 特殊符号（如感叹号、冒号、问号等）需要按下 Shift 键来生成，因此在代码中有对应的 Shift 键按下和释放逻辑。
 - 对于数字、小写字母、大写字母，程序分别根据 ASCII 码范围进行判断并触发相应的按键事件。
