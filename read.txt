@@ -1,0 +1,7 @@
+有几点
+1.cmd命令用system()调用不能执行两条连续的语句：system("cd desktop"); system("start ou.exe");
+这样系统会报找不到路径，所以用.bat
+2.原本程序在判断小写字母的ascll码时，应该是122
+3.还有一些字符没有完善。
+4.记得bat文件放在同一文件夹
+5.文件名随便改，记得把system("cmd /c gcc ou.cpp -o ou");的名称一起改
