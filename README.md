@@ -1,7 +1,6 @@
 # Software-Group-Test
 These programs are coded by Chen Sixiang. 
 
-# This program is coded by Chen Sixiang
 # 初中时代本人的小程序 那时候刚开始接触学习WINAPI
 # 这些文件记录了程序的不断调试和改进更新
 
@@ -44,6 +43,3 @@ These programs are coded by Chen Sixiang.
 
 1. 增加当鼠标移到窗口上时自动隐藏的功能。
 2. 改变了返校时间。
-
-
-# This program is coded by Chen Sixiang
