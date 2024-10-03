@@ -42,7 +42,7 @@ void show_key_intro()
     
     // 显示按键功能说明 用中文怕出现乱码 
     settextstyle(24, 0, "Consolas"); // 字体格式大小 
-    outtextxy(50, 75, "W - Move Up"); // 位置 
+    outtextxy(50, 75, "W - Move Up"); // 设置显示位置 
     outtextxy(50, 125, "A - Move Left");
     outtextxy(50, 170, "S - Move Down");
     outtextxy(50, 225, "D - Move Right");
@@ -160,7 +160,7 @@ void draw_board(int should_clear)
             if (number != 0) 
             {
                 char num_str[5];
-                snprintf(num_str, sizeof(num_str), "%d", number); // 使用 snprintf 更加安全 
+                snprintf(num_str, sizeof(num_str), "%d", number); // 使用 snprintf 更加安全 将整形转为字符串
                 setbkmode(TRANSPARENT); // 设置透明背景
                 settextstyle(30, 0, "Consolas"); // 设置字体
                 settextcolor(RGB(119, 110, 101)); // 设置文本颜色
@@ -222,7 +222,7 @@ void save_to_undo()
                 previous_board[undo_count][i][j] = board[i][j]; // 用数组存起来 
                 
         previous_scores[undo_count] = score; // 储存当前状态成绩 
-        undo_count++;
+        undo_count++; // 可撤销数量+1
     }
 }
 
@@ -240,7 +240,7 @@ void undo()
         score = previous_scores[undo_count]; // 显示撤销后对应的成绩 
         draw_board(1); // 打印 
     } 
-    else 
+    else // undo_couunt的值为0 提示不可撤销
         show_message("Cannot be revoked!"); // 提示用户没有可撤销的操作
 }
 
@@ -345,30 +345,30 @@ void move_up()
 {
     save_to_undo(); // 保存当前状态
     int moved = 0; // 标记是否发生了移动
-    for (int j = 0; j < SIZE; j++) 
+    for (int j = 0; j < SIZE; j++) // 遍历每一列
     {
         int current = 0; // 当前合并的行位置
-        for (int i = 1; i < SIZE; i++) 
+        for (int i = 1; i < SIZE; i++) // 遍历列中的每个元素，跳过第一行
         {
-            if (board[i][j] != 0) 
+            if (board[i][j] != 0) // 只有数字不为0才处理
             {
-                if (board[current][j] == 0) 
+                if (board[current][j] == 0) // 目标位置为空，直接将数字移动过去
                 {
                     board[current][j] = board[i][j]; // 将数字移动到当前行
-                    board[i][j] = 0;
+                    board[i][j] = 0; // 原位置清空
                     moved = 1; // 标记发生了移动
                 } 
-                else if (board[current][j] == board[i][j]) 
+                else if (board[current][j] == board[i][j])  // 目标位置的数字相同，合并
                 {
-                    board[current][j] *= 2; // 合并相同数字
+                    board[current][j] *= 2; // 合并相同数字 数字翻倍
                     score += board[current][j]; // 更新得分
-                    board[i][j] = 0;
-                    current++; // 合并后移动到下一行
+                    board[i][j] = 0; // 合并后原位置清空
+                    current++; // 合并完成后，下一次从下一行继续处理
                     moved = 1; // 标记发生了移动
                 } 
                 else 
                 {
-                    current++;
+                    current++; // 不进行合并，仅仅是移动到下一个位置
                     if (current != i) 
                     {
                         board[current][j] = board[i][j]; // 将数字移动到下一行
@@ -442,7 +442,7 @@ int check_win()
     for (int i = 0; i < SIZE; i++) 
         for (int j = 0; j < SIZE; j++) 
             if (board[i][j] == 2048) 
-                return 1; //遍历游戏板 
+                return 1; //遍历游戏板 有2048就判断胜利
                 
     return 0;
 }
@@ -466,30 +466,30 @@ int check_loss()
 // 保存游戏进度
 void save_game(const char *filename) 
 {
-    FILE *file = fopen(filename, "wb");
+    FILE *file = fopen(filename, "wb"); // 以二进制写入模式打开文件
     if (file == NULL) // 保存失败 
     {
-        show_message("Save Game failed!");
+        show_message("Save Game failed!"); // 提示用户
         return;
     }
     fwrite(board, sizeof(int), SIZE * SIZE, file); // 保存游戏板数据
     fwrite(&score, sizeof(int), 1, file); // 保存得分
-    fclose(file);
+    fclose(file); // 关闭文件
     show_message("Game Saved!"); // 提示保存成功 
 }
 
 // 加载游戏进度
 void load_game(const char *filename) 
 {
-    FILE *file = fopen(filename, "rb");
+    FILE *file = fopen(filename, "rb"); // 以二进制读取模式打开文件
     if (file == NULL) // 加载失败 
     {
-        show_message("Game loading failed!");
+        show_message("Game loading failed!"); // 提示用户
         return;
     }
     fread(board, sizeof(int), SIZE * SIZE, file); // 读取游戏板数据
     fread(&score, sizeof(int), 1, file); // 读取得分
-    fclose(file);
+    fclose(file); // 关闭文件
     show_message("Game Loaded!"); // 提示加载成功 
 }
 
