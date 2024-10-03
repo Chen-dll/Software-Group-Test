@@ -2,6 +2,7 @@
 These programs are coded by Chen Sixiang. 
 # This program is coded by Chen Sixiang
 # 初中时代本人的小程序 刚开始接触学习WINAPI
+# 这些文件记录了程序的不断调试和改进更新
 
 -----------------Version.3-----------------
 
