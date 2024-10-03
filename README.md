@@ -6,6 +6,7 @@ These programs are coded by Chen Sixiang.
 
 压缩包里有两个 exe 文件，一个是“打开返校倒计时.exe”，另一个是“关闭返校倒计时.exe”，请解压后运行。
 
+# Timer
 ## 一. 程序操作
 
 ### 1. 打开返校倒计时.exe
