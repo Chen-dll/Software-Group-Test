@@ -1,10 +1,9 @@
 # Software-Group-Test
 These programs are coded by Chen Sixiang. 
-# This program is coded by Chen Sixiang
-# 初中时代本人的小程序 刚开始接触学习WINAPI
-# 这些文件记录了程序的不断调试和改进更新
 
------------------Version.3-----------------
+# This program is coded by Chen Sixiang
+# 初中时代本人的小程序 那时候刚开始接触学习WINAPI
+# 这些文件记录了程序的不断调试和改进更新
 
 压缩包里有两个 exe 文件，一个是“打开返校倒计时.exe”，另一个是“关闭返校倒计时.exe”，请解压后运行。
 
@@ -46,6 +45,5 @@ These programs are coded by Chen Sixiang.
 1. 增加当鼠标移到窗口上时自动隐藏的功能。
 2. 改变了返校时间。
 
------------------Version.3-----------------
 
 # This program is coded by Chen Sixiang
