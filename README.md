@@ -1,6 +1,6 @@
 # Software-Group-Test
 These programs are coded by Chen Sixiang. 
-2048 
+2048
 基础功能：
 1. 随机数产生函数: 在初始化和每次操作后，在空区域产生2或4的随机数。
 2. 上下左右移动操作: 移动数字朝指定方向并合并相同数字。
