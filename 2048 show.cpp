@@ -9,10 +9,10 @@
 #include <string.h>   // 处理字符串 
 #include <stdio.h>
 #include <windows.h>  // 调用WINAPI
-#include <tchar.h> 	  // 获得管理员权限要用 
-#include <imm.h> 	  // 切换输入法要用 
+#include <tchar.h>    // 获得管理员权限要用 
+#include <imm.h>      // 切换输入法要用 
 
-#pragma comment(lib, "Imm32.lib") //输入法要用 
+#pragma comment(lib, "Imm32.lib") // 输入法要用 
 
 #define SIZE 4 // 定义游戏板的大小
 #define UNDO_LIMIT 2048 // 定义撤销操作的最大存储数量
@@ -133,21 +133,21 @@ void draw_board(int should_clear)
                 setfillcolor(RGB(238, 228, 218));  
             } else if (number == 4) {             // 4 的 颜色 
                 setfillcolor(RGB(237, 224, 200));
-            } else if (number == 8) {			  // 8 的 颜色 
+            } else if (number == 8) {             // 8 的 颜色 
                 setfillcolor(RGB(242, 177, 121));
-            } else if (number == 16) {			  // 16 的 颜色 
+            } else if (number == 16) {            // 16 的 颜色 
                 setfillcolor(RGB(245, 149, 99));
-            } else if (number == 32) {			  // 32 的 颜色 
+            } else if (number == 32) {            // 32 的 颜色 
                 setfillcolor(RGB(246, 124, 95));
-            } else if (number == 64) {			  // 64 的 颜色 
+            } else if (number == 64) {            // 64 的 颜色 
                 setfillcolor(RGB(246, 94, 59));
-            } else if (number == 128) {	          // 128 的 颜色 
+            } else if (number == 128) {           // 128 的 颜色 
                 setfillcolor(RGB(237, 207, 114));
             } else if (number == 256) {           // 256 的 颜色 
                 setfillcolor(RGB(237, 204, 97));
             } else if (number == 512) {           // 512 的 颜色 
                 setfillcolor(RGB(237, 200, 80));
-            } else if (number == 1024) {		  // 1024 的 颜色 
+            } else if (number == 1024) {          // 1024 的 颜色 
                 setfillcolor(RGB(237, 197, 63));
             } else if (number == 2048) {          // 2048 的 颜色 
                 setfillcolor(RGB(237, 194, 46));
@@ -166,7 +166,7 @@ void draw_board(int should_clear)
                 settextcolor(RGB(119, 110, 101)); // 设置文本颜色
                 int text_width = textwidth(num_str);
                 int text_height = textheight(num_str);
-                outtextxy(x + (80 - text_width) / 2, y + (80 - text_height) / 2, num_str); // 居中 
+                outtextxy(x + (80 - text_width) / 2, y + (80 - text_height) / 2, num_str); // 居中显示 
             }
         }
     }
