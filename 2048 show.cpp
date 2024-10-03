@@ -2,6 +2,7 @@
 //#Program Name：2048#//
 //#Finish Date: 2024.10.3#//
 //#Environment: Dev-C++ 5.11 with EasyX#// 
+//#Character encoding: UTF-8#//
 //#详细设计思路请查看Markdown文档#//
 #include <graphics.h> // EasyX 图形库头文件
 #include <conio.h>    // 控制台输入输出
