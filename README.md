@@ -1,6 +1,6 @@
 # Software-Group-Test
-These programs are coded by Chen Sixiang. 
-初一学习信竞时与好朋友讨论完成了程序的雏形 
+These programs are coded by Chen Sixiang.   
+初一学习信竞时与好朋友讨论完成了程序的雏形  
 在高中本人再次完善改进
 
 ## 1. 程序介绍
