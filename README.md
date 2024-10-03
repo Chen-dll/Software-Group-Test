@@ -1,7 +1,7 @@
 # Software-Group-Test
 These programs are coded by Chen Sixiang. 
 # This program is coded by Chen Sixiang
-# 初中时代本人的小程序 那时候开始接触学习WINAPI
+# 初中时代本人的小程序 刚开始接触学习WINAPI
 
 -----------------Version.3-----------------
 
