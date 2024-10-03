@@ -15,7 +15,7 @@ These programs are coded by Chen Sixiang.
 
 本人设计思路如下：
 
-###1. **基础架构**
+### 1. **基础架构**
 - 游戏的核心逻辑是 4x4 的棋盘（`board`），每个格子可以存储一个数字，目标是通过移动方块（合并相同数字）最终生成 2048 方块
 - 游戏状态通过二维数组 `board` 表示，撤销操作通过三维数组 `previous_board` 和 `previous_scores` 保存历史游戏板和得分
 
