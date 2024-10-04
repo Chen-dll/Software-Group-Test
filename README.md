@@ -1,5 +1,5 @@
-# Software-Group-Test
-These programs are coded by Chen Sixiang.   ![](https://komarev.com/ghpvc/?username=Chen-dll)  
+# Software-Group-Test ![](https://komarev.com/ghpvc/?username=Chen-dll)  
+These programs are coded by Chen Sixiang.   
 初一学习信竞时与好朋友讨论完成了程序的雏形  
 在高中本人再次完善改进 `Typer.rar` 里面为成品
 剩下的文件是调试和改进优化的过程  
