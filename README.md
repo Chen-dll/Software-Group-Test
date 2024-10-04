@@ -1,5 +1,5 @@
 # Software-Group-Test
-These programs are coded by Chen Sixiang. 
+These programs are coded by Chen Sixiang. ![](https://komarev.com/ghpvc/?username=Chen-dll)
 
 # 初中时代本人的小程序 那时候刚开始接触学习WINAPI
 # 这些文件记录了程序的不断调试和改进更新
