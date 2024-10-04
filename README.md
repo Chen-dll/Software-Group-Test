@@ -1,6 +1,6 @@
-# Software-Group-Test 
+# Software-Group-Test ![](https://komarev.com/ghpvc/?username=Chen-dll)
 These programs are coded by Chen Sixiang. 
-完成时间 2024年10月3日 ![](https://komarev.com/ghpvc/?username=Chen-dll)
+完成时间 2024年10月3日 
 # 2048
 ## 基础功能：
 1. 随机数产生函数: 在初始化和每次操作后，在空区域产生2或4的随机数。
