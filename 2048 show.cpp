@@ -9,7 +9,7 @@
 #include <ctime>      // 用于随机数生成
 #include <cstdlib>
 #include <string.h>   // 处理字符串 
-#include <stdio.h>
+#include <stdio.h>    // 标准输入输出库
 #include <windows.h>  // 调用WINAPI
 #include <tchar.h>    // 获得管理员权限要用 
 #include <imm.h>      // 切换输入法要用 
