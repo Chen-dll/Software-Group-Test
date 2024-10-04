@@ -1,5 +1,5 @@
 # Software-Group-Test ![](https://komarev.com/ghpvc/?username=Chen-dll)
-These programs are coded by Chen Sixiang. 
+These programs are coded by Chen Sixiang.   
 完成时间 2024年10月3日 
 # 2048
 ## 基础功能：
