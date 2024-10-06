@@ -1,19 +1,66 @@
 # Software-Group-Test ![](https://komarev.com/ghpvc/?username=Chen-dll)
 These programs are coded by Chen Sixiang.   
+完成时间 2024年10月7日 
+# 文本编辑器
+## 基础功能：
+1.使用两个栈储存信息，一个存储文本内容，另一个存储操作记录。
+2.支持以下操作：
+  插入字符：在当前光标位置插入一个字符。
+  删除字符：删除当前光标位置的字符。
+  撤销：撤销最近的一次操作。
+3.编写函数，模拟文本编辑和撤销操作。
+4.编写一个测试函数，验证多个示例输入的文本编辑和撤销过程。
+## 进阶功能：
+1.支持多种编辑操作，例如复制、粘贴。	
+2.支持重做（redo）功能，允许用户恢复最近撤销的操作。（使用栈操作实现）
+3.添加错误处理，例如操作非法的情况。（如删除空文本时的操作）。
 
-# 2048
-- [点击这里跳转到2048分支](https://github.com/Chen-dll/Software-Group-Test/tree/2048)  
-- [点击这里跳转到2048发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-1)  
+## 设计思路
 
-# 计时器
-- [点击这里跳转到计时器分支](https://github.com/Chen-dll/Software-Group-Test/tree/Timer)
-- [点击这里跳转到计时器发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-4)
-  
-# 打字机
-- [点击这里跳转到打字机分支](https://github.com/Chen-dll/Software-Group-Test/tree/Typer)  
-- [点击这里跳转到打字机发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-5)
-  
-# 抽号器
-- [点击这里跳转到抽号器分支](https://github.com/Chen-dll/Software-Group-Test/tree/Random)
-- [点击这里跳转到抽号器发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-6)  
+### 1. **基础架构**
+- **操作记录结构体 (`Operation`)**：
+  - 用于记录用户的操作，包括插入、删除和粘贴操作的信息。
+
+- **自定义栈类 (`Stack<T>`)**：
+  - 用于存储文本和操作记录。支持基本的栈操作（`push`、`pop`、`peek`等）以及动态扩展功能。
+
+- **文本编辑器类 (`TextEditor`)**：
+  - 实现了文本编辑的核心功能，包括插入、删除、撤销、重做等操作。
+
+### 2. **关键功能**
+- **插入字符 (`insertChar`)**：
+  - 将字符推入文本栈，并记录操作到撤销栈中。同时清空重做栈。
+
+- **删除字符 (`deleteChar`)**：
+  - 从文本栈中删除字符，记录操作到撤销栈中。返回删除是否成功。
+
+- **撤销操作 (`undo`)**：
+  - 从撤销栈中弹出最后的操作记录，根据操作类型（插入、删除、粘贴）恢复文本状态，并将该操作压入重做栈中。
+
+- **重做操作 (`redo`)**：
+  - 从重做栈中弹出操作记录，并根据操作类型重新执行相应的文本操作，将该操作压回撤销栈。
+
+- **复制与粘贴 (`copy` 和 `paste`)**：
+  - 复制当前文本到剪贴板，并允许从剪贴板粘贴内容到文本中。粘贴操作记录在撤销栈中。
+
+### 3. **显示和用户交互**
+- **显示文本 (`displayText`)**：
+  - 显示当前文本内容并提供操作说明，更新光标位置以便用户继续输入。
+
+- **显示错误信息 (`displayError`) 和延迟显示 (`showErrorWithDelay`)**：
+  - 提供错误信息反馈，并在延迟后清除信息。
+
+### 4. **日志记录与文件操作**
+- **操作日志**：
+  - 全局操作日志数组用于记录所有用户操作，支持日志的保存功能 (`saveLogToFile`)，以便后续查看。
+
+### 5. **键盘事件模拟**
+- **模拟按键和文本输入**：
+  -提供模拟键盘按键的功能，允许自动化测试文本编辑功能，通过虚拟按键模拟用户输入。
+
+### 6. **其他功能**
+- **动态栈扩展**：
+  - 如果栈满，将自动扩展容量以存储更多的操作和文本内容。
+
+### 7. **其他&后续优化**
 
