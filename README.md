@@ -105,5 +105,13 @@ These programs are coded by Chen Sixiang.
      - `swap(board[i][j], board[SIZE - i - 1][SIZE - j - 1]);`  交换 `(i,j)` 和 `(SIZE-i-1, SIZE-j-1)`
      - `swap(board[i][j], board[SIZE - j - 1][i]);`  交换 `(i,j)` 和 `(SIZE-j-1,i)`
      - 以此类推，达到顺时针旋转90°的操作。
-- `2048 show 草稿.cpp` 里面主要在调试，尝试优化未果orz，软件组懂双缓冲技术的大佬教教我吧%%%，最终代码是 `2048 show.cpp`，后续考虑加入显示历史最高成绩的功能，再试试优化代码逻辑和图像显示。
+- `2048 show 草稿.cpp` 里面主要在调试，尝试优化未果orz，软件组懂双缓冲技术的大佬教教我吧%%%，最终代码是 `![微信图片_20241007010333](https://github.com/user-attachments/assets/47d69d5d-a9b0-49d3-9cba-ace9cba4eec9)
+2048 show.cpp`，后续考虑加入显示历史最高成绩的功能，再试试优化代码逻辑和图像显示。
 - 运行结束完记得切换输入法
+
+### 7. **程序截图**
+![1](https://github.com/user-attachments/assets/59cb2e2f-7e80-4b5e-a218-f1043b261763)
+![2](https://github.com/user-attachments/assets/d465e1bc-f4e5-4f2a-ae4d-f72efe41df5c)
+![3](https://github.com/user-attachments/assets/16c78c58-fe26-41f1-a266-28804471db65)
+![4](https://github.com/user-attachments/assets/e8d4bac0-7707-416f-9053-c05ecd65baff)
+![5](https://github.com/user-attachments/assets/d256a28a-9043-4447-a8b0-e60de2ac9f3c)
