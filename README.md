@@ -44,3 +44,7 @@ These programs are coded by Chen Sixiang.
 
 1. 增加当鼠标移到窗口上时自动隐藏的功能。
 2. 改变了返校时间。
+
+## 五. 程序截图
+
+![1](https://github.com/user-attachments/assets/0c216598-24e7-409f-9209-287473549b5b)
