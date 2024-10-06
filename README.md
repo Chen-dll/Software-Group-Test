@@ -3,7 +3,15 @@ These programs are coded by Chen Sixiang.
 
 # 2048
 - [点击这里跳转到2048分支](https://github.com/Chen-dll/Software-Group-Test/tree/2048)  
-- [点击这里跳转到2048发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-1)  
+- [点击这里跳转到2048发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-1)
+
+# 学生信息管理系统
+- [点击这里跳转到学生信息管理系统分支](https://github.com/Chen-dll/Software-Group-Test/tree/Student-System)
+- [点击这里跳转到学生信息管理系统发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-2)
+
+# 文本编辑器
+- [点击这里跳转到文本编辑器分支](https://github.com/Chen-dll/Software-Group-Test/tree/Editor)
+- [点击这里跳转到文本编辑器发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-3)
 
 # 计时器
 - [点击这里跳转到计时器分支](https://github.com/Chen-dll/Software-Group-Test/tree/Timer)
