@@ -41,9 +41,10 @@ These programs are coded by Chen Sixiang.
 - `students.txt` 是随便输入的测试文件。
 
 ### 5. **程序截图**
+
+![3](https://github.com/user-attachments/assets/07263965-1816-4cfc-ac5f-50d577fd7e35)
 ![1](https://github.com/user-attachments/assets/da7174d1-00c7-4128-b0cb-d7c43eb49cc7)
 ![2](https://github.com/user-attachments/assets/6c275619-89c9-4d89-8e32-a38f7e51dd74)
-![3](https://github.com/user-attachments/assets/07263965-1816-4cfc-ac5f-50d577fd7e35)
 ![4](https://github.com/user-attachments/assets/502864d6-bf6e-4d62-a900-c4834364d6e6)
 ![5](https://github.com/user-attachments/assets/e63a1257-d803-4c42-ba0b-aa9e96d0d890)
 ![微信图片_20241007014216](https://github.com/user-attachments/assets/dd89f3e6-0052-4e95-983d-873372fc1065)
