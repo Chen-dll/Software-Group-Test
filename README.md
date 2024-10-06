@@ -110,6 +110,7 @@ These programs are coded by Chen Sixiang.
 - 运行结束完记得切换输入法
 
 ### 7. **程序截图**
+![0](https://github.com/user-attachments/assets/9c09bc00-8280-4448-810b-63075070251b)  
 ![1](https://github.com/user-attachments/assets/59cb2e2f-7e80-4b5e-a218-f1043b261763)  
 ![2](https://github.com/user-attachments/assets/d465e1bc-f4e5-4f2a-ae4d-f72efe41df5c)  
 ![3](https://github.com/user-attachments/assets/16c78c58-fe26-41f1-a266-28804471db65)  
