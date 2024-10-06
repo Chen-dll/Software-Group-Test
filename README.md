@@ -274,3 +274,10 @@ These programs are coded by Chen Sixiang.
 - 后续考虑加上剪切操作 `Ctrl + X`，实现按住 `Shift + 方向键` 能选中文本进行操作的功能。
 - 另外在最初界面直接按下 `F1` 进入测试操作可能会有一点显示异常。
 - 运行结束后记得切换输入法。
+
+### 8. **程序截图**
+![1](https://github.com/user-attachments/assets/a68420dc-0139-4a79-917b-49044c9ab739)
+![2](https://github.com/user-attachments/assets/80ec94d6-7501-488c-8280-b2551e994851)
+![3](https://github.com/user-attachments/assets/c1a4cb49-d9c6-47c7-8c50-700b7506f61d)
+![4](https://github.com/user-attachments/assets/72ae788c-4346-4a15-b140-b67453a22c0b)
+![5](https://github.com/user-attachments/assets/efa39771-1d0b-4829-ace4-d402283b5bfb)
