@@ -202,6 +202,7 @@ These programs are coded by Chen Sixiang.
 
 - **文本编辑器类 (`TextEditor`)**：
   - 实现了文本编辑的核心功能，包括插入、删除、撤销、重做等操作。
+  - 
 
 ### 2. **关键功能**
 
