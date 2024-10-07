@@ -2,6 +2,7 @@
 // #Program Name：文本编辑器#//
 // #Finish Date: 2024.10.7#//
 // #Environment: Dev-C++ 5.11#//
+//#详细设计思路请查看Markdown文档#//
 #include <iostream>   // 标准输入输出
 #include <conio.h>    // 用于 _getch() 函数，捕获键盘输入
 #include <string>     // 用于字符串操作
