@@ -2,6 +2,7 @@
 //#Program Name：学生信息管理系统 #//
 //#Finish Date: 2024.10.6#//
 //#Environment: Dev-C++ 5.11 with EasyX#// 
+//#详细设计思路请查看Markdown文档#//
 #include <stdio.h>    // 标准输入输出库
 #include <stdlib.h>   // 标准库
 #include <string.h>   // 字符串处理
