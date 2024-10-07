@@ -25,3 +25,5 @@ These programs are coded by Chen Sixiang.
 - [点击这里跳转到抽号器分支](https://github.com/Chen-dll/Software-Group-Test/tree/Random)
 - [点击这里跳转到抽号器发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-6)  
 
+# EasyX图形库
+- [点击这里跳转到EasyX官网](https://easyx.cn/)
