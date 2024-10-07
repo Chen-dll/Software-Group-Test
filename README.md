@@ -105,8 +105,7 @@ These programs are coded by Chen Sixiang.
      - `swap(board[i][j], board[SIZE - i - 1][SIZE - j - 1]);`  交换 `(i,j)` 和 `(SIZE-i-1, SIZE-j-1)`
      - `swap(board[i][j], board[SIZE - j - 1][i]);`  交换 `(i,j)` 和 `(SIZE-j-1,i)`
      - 以此类推，达到顺时针旋转90°的操作。
-- `2048 show 草稿.cpp` 里面主要在调试，尝试优化未果orz，软件组懂双缓冲技术的大佬教教我吧%%%，最终代码是 `![微信图片_20241007010333](https://github.com/user-attachments/assets/47d69d5d-a9b0-49d3-9cba-ace9cba4eec9)
-2048 show.cpp`，后续考虑加入显示历史最高成绩的功能，再试试优化代码逻辑和图像显示。
+- `2048 show 草稿.cpp` 里面主要在调试，尝试优化未果orz，软件组懂双缓冲技术的大佬教教我吧%%%，最终代码是 `2048 show.cpp`，后续考虑加入显示历史最高成绩的功能，再试试优化代码逻辑和图像显示。
 - 运行结束完记得切换输入法
 
 ### 7. **程序截图**
