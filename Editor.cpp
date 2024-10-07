@@ -1,534 +1,534 @@
 // #This program is coded by Chen Sixiang#//
-// #Program Name£ºÎÄ±¾±à¼­Æ÷#//
+// #Program Nameï¼šæ–‡æœ¬ç¼–è¾‘å™¨#//
 // #Finish Date: 2024.10.7#//
 // #Environment: Dev-C++ 5.11#//
-#include <iostream>   // ±ê×¼ÊäÈëÊä³ö
-#include <conio.h>    // ÓÃÓÚ _getch() º¯Êı£¬²¶»ñ¼üÅÌÊäÈë
-#include <string>     // ÓÃÓÚ×Ö·û´®²Ù×÷
-#include <windows.h>  // ÓÃÓÚÇå³ı¿ØÖÆÌ¨Êä³öºÍË¯Ãßº¯Êı
-#include <stdexcept>  // ÓÃÓÚ std::out_of_range
-#include <time.h>     // ÓÃÓÚËæ»úÊı
-#include <thread>     // ÓÃÓÚ¶àÏß³Ì
-#include <fstream>    // ÓÃÓÚ²Ù×÷ÎÄ¼ş
-#include <atomic>     // ÓÃÓÚÔ­×Ó±äÁ¿
-#include <graphics.h> // EasyX Í¼ĞÎ¿âÍ·ÎÄ¼ş
+#include <iostream>   // æ ‡å‡†è¾“å…¥è¾“å‡º
+#include <conio.h>    // ç”¨äº _getch() å‡½æ•°ï¼Œæ•è·é”®ç›˜è¾“å…¥
+#include <string>     // ç”¨äºå­—ç¬¦ä¸²æ“ä½œ
+#include <windows.h>  // ç”¨äºæ¸…é™¤æ§åˆ¶å°è¾“å‡ºå’Œç¡çœ å‡½æ•°
+#include <stdexcept>  // ç”¨äº std::out_of_range
+#include <time.h>     // ç”¨äºéšæœºæ•°
+#include <thread>     // ç”¨äºå¤šçº¿ç¨‹
+#include <fstream>    // ç”¨äºæ“ä½œæ–‡ä»¶
+#include <atomic>     // ç”¨äºåŸå­å˜é‡
+#include <graphics.h> // EasyX å›¾å½¢åº“å¤´æ–‡ä»¶
 
 #define SIZE 1024 // SIZE
 
 using namespace std;
 
-const int MAX_LOG_SIZE = 1024; // ¶¨Òå×î´óÈÕÖ¾ÈİÁ¿
+const int MAX_LOG_SIZE = 1024; // å®šä¹‰æœ€å¤§æ—¥å¿—å®¹é‡
 
-char operationLogs[MAX_LOG_SIZE]; // È«¾Ö²Ù×÷ÈÕÖ¾Êı×é ÓÃÀ´´æ´¢²Ù×÷ÈÕÖ¾
-int logIndex = 0;                 // µ±Ç°ÈÕÖ¾µÄĞ´ÈëÎ»ÖÃ
-int IsTest = 0;                   // ¼ÇÂ¼²âÊÔ×´Ì¬ ÓÃÓÚÅĞ¶ÏÇåÆÁ
+char operationLogs[MAX_LOG_SIZE]; // å…¨å±€æ“ä½œæ—¥å¿—æ•°ç»„ ç”¨æ¥å­˜å‚¨æ“ä½œæ—¥å¿—
+int logIndex = 0;                 // å½“å‰æ—¥å¿—çš„å†™å…¥ä½ç½®
+int IsTest = 0;                   // è®°å½•æµ‹è¯•çŠ¶æ€ ç”¨äºåˆ¤æ–­æ¸…å±
 
-// ²Ù×÷¼ÇÂ¼½á¹¹Ìå
+// æ“ä½œè®°å½•ç»“æ„ä½“
 struct Operation
 {
-    int type;          // ²Ù×÷ÀàĞÍ£¨1 ±íÊ¾²åÈë£¬0 ±íÊ¾É¾³ı£©
-    char character;    // ±»²åÈë»òÉ¾³ıµÄ×Ö·û
-    string pastedText; // ±»Õ³ÌùµÄÎÄ±¾£¨½öÔÚÕ³Ìù²Ù×÷ÖĞÊ¹ÓÃ£©
+    int type;          // æ“ä½œç±»å‹ï¼ˆ1 è¡¨ç¤ºæ’å…¥ï¼Œ0 è¡¨ç¤ºåˆ é™¤ï¼‰
+    char character;    // è¢«æ’å…¥æˆ–åˆ é™¤çš„å­—ç¬¦
+    string pastedText; // è¢«ç²˜è´´çš„æ–‡æœ¬ï¼ˆä»…åœ¨ç²˜è´´æ“ä½œä¸­ä½¿ç”¨ï¼‰
 
-    // Ä¬ÈÏ¹¹Ôìº¯Êı£¬³õÊ¼»¯ character Îª '\0'£¨¿Õ×Ö·û£©
+    // é»˜è®¤æ„é€ å‡½æ•°ï¼Œåˆå§‹åŒ– character ä¸º '\0'ï¼ˆç©ºå­—ç¬¦ï¼‰
     Operation() : type(0), character('\0'), pastedText("") {}
-    // ´ø²ÎÊıµÄ¹¹Ôìº¯Êı
+    // å¸¦å‚æ•°çš„æ„é€ å‡½æ•°
     Operation(int t, char c, const string &text = "") : type(t), character(c), pastedText(text) {}
 };
 
-// ×Ô¶¨ÒåÕ»Àà
+// è‡ªå®šä¹‰æ ˆç±»
 template <typename T>
 class Stack
 {
 private:
-    T *data;      // ¶¯Ì¬Êı×é´æ´¢Õ»ÔªËØ
-    int capacity; // Õ»µÄÈİÁ¿
-    int top;      // Õ»¶¥Ë÷Òı
+    T *data;      // åŠ¨æ€æ•°ç»„å­˜å‚¨æ ˆå…ƒç´ 
+    int capacity; // æ ˆçš„å®¹é‡
+    int top;      // æ ˆé¡¶ç´¢å¼•
 
-    // ¶¯Ì¬À©Õ¹Õ»µÄÈİÁ¿
+    // åŠ¨æ€æ‰©å±•æ ˆçš„å®¹é‡
     void resize()
     {
-        int newCapacity = capacity * 2;  // À©Õ¹ÎªÔ­À´µÄÁ½±¶ÈİÁ¿
-        T *newData = new T[newCapacity]; // ·ÖÅäĞÂ¿Õ¼ä
+        int newCapacity = capacity * 2;  // æ‰©å±•ä¸ºåŸæ¥çš„ä¸¤å€å®¹é‡
+        T *newData = new T[newCapacity]; // åˆ†é…æ–°ç©ºé—´
 
-        // ¸´ÖÆ¾ÉÊı¾İµ½ĞÂÊı×é
+        // å¤åˆ¶æ—§æ•°æ®åˆ°æ–°æ•°ç»„
         for (int i = 0; i <= top; ++i)
         {
             newData[i] = data[i];
         }
 
-        // É¾³ı¾ÉÊı×é£¬ÇĞ»»µ½ĞÂÊı×é
+        // åˆ é™¤æ—§æ•°ç»„ï¼Œåˆ‡æ¢åˆ°æ–°æ•°ç»„
         delete[] data;
         data = newData;
         capacity = newCapacity;
     }
 
 public:
-    // ¹¹Ôìº¯Êı
+    // æ„é€ å‡½æ•°
     Stack(int size = SIZE) : capacity(size), top(-1)
     {
-        data = new T[capacity]; // ´´½¨¶¯Ì¬Êı×é
+        data = new T[capacity]; // åˆ›å»ºåŠ¨æ€æ•°ç»„
     }
 
-    // Îö¹¹º¯Êı
+    // ææ„å‡½æ•°
     ~Stack()
     {
-        delete[] data; // ÊÍ·Å¶¯Ì¬Êı×é
+        delete[] data; // é‡Šæ”¾åŠ¨æ€æ•°ç»„
     }
 
-    // ÍÆÈëÔªËØµ½Õ»
+    // æ¨å…¥å…ƒç´ åˆ°æ ˆ
     void push(const T &value)
     {
-        // ¼ì²éÊÇ·ñĞèÒªÀ©Õ¹ÈİÁ¿
+        // æ£€æŸ¥æ˜¯å¦éœ€è¦æ‰©å±•å®¹é‡
         if (top >= capacity - 1)
         {
-            resize(); // ¶¯Ì¬À©Õ¹ÈİÁ¿
+            resize(); // åŠ¨æ€æ‰©å±•å®¹é‡
         }
-        data[++top] = value; // Ôö¼ÓÕ»¶¥Ë÷Òı²¢¸³Öµ
+        data[++top] = value; // å¢åŠ æ ˆé¡¶ç´¢å¼•å¹¶èµ‹å€¼
     }
 
-    // ´ÓÕ»ÖĞµ¯³öÔªËØ
+    // ä»æ ˆä¸­å¼¹å‡ºå…ƒç´ 
     T pop()
     {
         if (isEmpty())
         {
-            cerr << "Õ»Îª¿Õ£¬ÎŞ·¨µ¯³öÔªËØ£¡" << endl;
-            throw out_of_range("Õ»Îª¿Õ"); // Å×³öÒì³£ĞÅÏ¢
+            cerr << "æ ˆä¸ºç©ºï¼Œæ— æ³•å¼¹å‡ºå…ƒç´ ï¼" << endl;
+            throw out_of_range("æ ˆä¸ºç©º"); // æŠ›å‡ºå¼‚å¸¸ä¿¡æ¯
         }
-        return data[top--]; // ·µ»ØÕ»¶¥ÔªËØ²¢¼õÉÙÕ»¶¥Ë÷Òı
+        return data[top--]; // è¿”å›æ ˆé¡¶å…ƒç´ å¹¶å‡å°‘æ ˆé¡¶ç´¢å¼•
     }
 
-    // ²é¿´Õ»¶¥ÔªËØ
+    // æŸ¥çœ‹æ ˆé¡¶å…ƒç´ 
     T peek() const
     {
         if (isEmpty())
         {
-            cerr << "Õ»Îª¿Õ£¬ÎŞ·¨²é¿´Õ»¶¥ÔªËØ£¡" << endl;
-            throw out_of_range("Õ»Îª¿Õ"); // Å×³öÒì³£ĞÅÏ¢
+            cerr << "æ ˆä¸ºç©ºï¼Œæ— æ³•æŸ¥çœ‹æ ˆé¡¶å…ƒç´ ï¼" << endl;
+            throw out_of_range("æ ˆä¸ºç©º"); // æŠ›å‡ºå¼‚å¸¸ä¿¡æ¯
         }
-        return data[top]; // ·µ»ØÕ»¶¥ÔªËØ
+        return data[top]; // è¿”å›æ ˆé¡¶å…ƒç´ 
     }
 
-    // ¼ì²éÕ»ÊÇ·ñÎª¿Õ
+    // æ£€æŸ¥æ ˆæ˜¯å¦ä¸ºç©º
     bool isEmpty() const
     {
-        return top == -1; // Õ»¶¥Ë÷ÒıÎª-1Ê±Õ»Îª¿Õ
+        return top == -1; // æ ˆé¡¶ç´¢å¼•ä¸º-1æ—¶æ ˆä¸ºç©º
     }
 
-    // »ñÈ¡Õ»µÄ´óĞ¡
+    // è·å–æ ˆçš„å¤§å°
     int size() const
     {
-        return top + 1; // Õ»µÄ´óĞ¡ÎªÕ»¶¥Ë÷Òı¼Ó1
+        return top + 1; // æ ˆçš„å¤§å°ä¸ºæ ˆé¡¶ç´¢å¼•åŠ 1
     }
 
-    // ¸´ÖÆÕ»ÄÚÈİµ½×Ö·û´®
+    // å¤åˆ¶æ ˆå†…å®¹åˆ°å­—ç¬¦ä¸²
     string toString() const
     {
         string result;
-        // Í¨¹ı±éÀú²Ù×÷½«µ±Ç°Õ»µÄÄÚÈİ´æ´¢µ½ÁÙÊ±Õ»
+        // é€šè¿‡éå†æ“ä½œå°†å½“å‰æ ˆçš„å†…å®¹å­˜å‚¨åˆ°ä¸´æ—¶æ ˆ
         for (int i = 0; i <= top; ++i)
         {
-            result += data[i]; // Öğ¸ö¹¹½¨×Ö·û´®
+            result += data[i]; // é€ä¸ªæ„å»ºå­—ç¬¦ä¸²
         }
-        return result; // ·µ»Ø×Ö·û´®
+        return result; // è¿”å›å­—ç¬¦ä¸²
     }
 };
 
-// ÎÄ±¾±à¼­Æ÷Àà
+// æ–‡æœ¬ç¼–è¾‘å™¨ç±»
 class TextEditor
 {
 private:
-    Stack<char> textStack;      // ÎÄ±¾Õ»£¬´æ´¢ÎÄ±¾ÄÚÈİ
-    Stack<Operation> undoStack; // ²Ù×÷Õ»£¬´æ´¢³·Ïú²Ù×÷
-    Stack<Operation> redoStack; // ÖØ×ö²Ù×÷Õ»
-    string clipboard;           // ¼ôÌù°å×Ö·û´®
+    Stack<char> textStack;      // æ–‡æœ¬æ ˆï¼Œå­˜å‚¨æ–‡æœ¬å†…å®¹
+    Stack<Operation> undoStack; // æ“ä½œæ ˆï¼Œå­˜å‚¨æ’¤é”€æ“ä½œ
+    Stack<Operation> redoStack; // é‡åšæ“ä½œæ ˆ
+    string clipboard;           // å‰ªè´´æ¿å­—ç¬¦ä¸²
 
 public:
-    // ²åÈë×Ö·ûº¯Êı
+    // æ’å…¥å­—ç¬¦å‡½æ•°
     void insertChar(char c)
     {
         textStack.push(c);
-        undoStack.push({1, c}); // 1 ±íÊ¾²åÈë²Ù×÷
+        undoStack.push({1, c}); // 1 è¡¨ç¤ºæ’å…¥æ“ä½œ
         while (!redoStack.isEmpty())
-            redoStack.pop(); // Çå¿ÕÖØ×öÕ»
+            redoStack.pop(); // æ¸…ç©ºé‡åšæ ˆ
     }
 
-    // É¾³ı×Ö·ûº¯Êı
-    bool deleteChar() // ·µ»ØÊÇ·ñ³É¹¦É¾³ı
+    // åˆ é™¤å­—ç¬¦å‡½æ•°
+    bool deleteChar() // è¿”å›æ˜¯å¦æˆåŠŸåˆ é™¤
     {
-        if (!textStack.isEmpty()) // ÅĞ¶ÏÎÄ±¾Õ»ÊÇ·ñÎª¿Õ
+        if (!textStack.isEmpty()) // åˆ¤æ–­æ–‡æœ¬æ ˆæ˜¯å¦ä¸ºç©º
         {
-            char deletedChar = textStack.pop(); // É¾³ı×Ö·û
-            undoStack.push({0, deletedChar});   // 0 ±íÊ¾É¾³ı²Ù×÷
-            while (!redoStack.isEmpty())        // Çå¿ÕÖØ×öÕ»
+            char deletedChar = textStack.pop(); // åˆ é™¤å­—ç¬¦
+            undoStack.push({0, deletedChar});   // 0 è¡¨ç¤ºåˆ é™¤æ“ä½œ
+            while (!redoStack.isEmpty())        // æ¸…ç©ºé‡åšæ ˆ
                 redoStack.pop();
-            return true; // É¾³ı³É¹¦
+            return true; // åˆ é™¤æˆåŠŸ
         }
         else
         {
-            return false; // É¾³ıÊ§°Ü
+            return false; // åˆ é™¤å¤±è´¥
         }
     }
 
-    // ³·Ïú²Ù×÷º¯Êı
+    // æ’¤é”€æ“ä½œå‡½æ•°
     void undo()
     {
-        if (!undoStack.isEmpty()) // ÅĞ¶Ï³·ÏúÕ»ÊÇ·ñÎª¿Õ
+        if (!undoStack.isEmpty()) // åˆ¤æ–­æ’¤é”€æ ˆæ˜¯å¦ä¸ºç©º
         {
-            Operation lastOperation = undoStack.pop(); // »ñÈ¡×îºóÒ»Ïî²Ù×÷
-            if (lastOperation.type == 1)               // 1 ±íÊ¾²åÈë²Ù×÷£¬
+            Operation lastOperation = undoStack.pop(); // è·å–æœ€åä¸€é¡¹æ“ä½œ
+            if (lastOperation.type == 1)               // 1 è¡¨ç¤ºæ’å…¥æ“ä½œï¼Œ
             {
-                textStack.pop(); // ³·ÏúÊ±É¾³ı×Ö·û
+                textStack.pop(); // æ’¤é”€æ—¶åˆ é™¤å­—ç¬¦
             }
-            else if (lastOperation.type == 0) // 0 ±íÊ¾É¾³ı²Ù×÷
+            else if (lastOperation.type == 0) // 0 è¡¨ç¤ºåˆ é™¤æ“ä½œ
             {
-                textStack.push(lastOperation.character); // ³·ÏúÊ±»Ö¸´×Ö·û
+                textStack.push(lastOperation.character); // æ’¤é”€æ—¶æ¢å¤å­—ç¬¦
             }
-            else if (lastOperation.type == 2) // 2 ±íÊ¾Õ³Ìù²Ù×÷£¬³·ÏúÊ±É¾³ıÕ³ÌùµÄÎÄ±¾
+            else if (lastOperation.type == 2) // 2 è¡¨ç¤ºç²˜è´´æ“ä½œï¼Œæ’¤é”€æ—¶åˆ é™¤ç²˜è´´çš„æ–‡æœ¬
             {
-                // Ö±½ÓÉ¾³ıÕ³ÌùµÄÎÄ±¾£¬¶ø²»ÊÇÖğ¸ö×Ö·ûÉ¾³ı
+                // ç›´æ¥åˆ é™¤ç²˜è´´çš„æ–‡æœ¬ï¼Œè€Œä¸æ˜¯é€ä¸ªå­—ç¬¦åˆ é™¤
                 size_t lengthToDelete = lastOperation.pastedText.size();
                 for (size_t i = 0; i < lengthToDelete; ++i)
                 {
-                    if (!textStack.isEmpty()) // È·±£²»³¬³öÎÄ±¾Õ»µÄ·¶Î§
-                        textStack.pop();      // É¾³ı×Ö·û
+                    if (!textStack.isEmpty()) // ç¡®ä¿ä¸è¶…å‡ºæ–‡æœ¬æ ˆçš„èŒƒå›´
+                        textStack.pop();      // åˆ é™¤å­—ç¬¦
                 }
             }
-            redoStack.push(lastOperation); // ½«³·Ïú²Ù×÷Ñ¹ÈëÖØ×öÕ»
+            redoStack.push(lastOperation); // å°†æ’¤é”€æ“ä½œå‹å…¥é‡åšæ ˆ
         }
         else
         {
-            showErrorWithDelay("Ã»ÓĞ¿ÉÒÔ³·ÏúµÄ²Ù×÷£¡", 1000); // ÌáÊ¾ÓÃ»§Ã»ÓĞ¿É³·Ïú²Ù×÷
+            showErrorWithDelay("æ²¡æœ‰å¯ä»¥æ’¤é”€çš„æ“ä½œï¼", 1000); // æç¤ºç”¨æˆ·æ²¡æœ‰å¯æ’¤é”€æ“ä½œ
         }
     }
 
-    // ÖØ×ö²Ù×÷º¯Êı
+    // é‡åšæ“ä½œå‡½æ•°
     void redo()
     {
-        if (!redoStack.isEmpty()) // ÅĞ¶ÏÖØ×öÕ»ÊÇ·ñÎª¿Õ
+        if (!redoStack.isEmpty()) // åˆ¤æ–­é‡åšæ ˆæ˜¯å¦ä¸ºç©º
         {
-            Operation lastOperation = redoStack.pop(); // »ñÈ¡×îºóÒ»ÏîÖØ×ö²Ù×÷
-            if (lastOperation.type == 1)               // 1 ±íÊ¾²åÈë²Ù×÷
+            Operation lastOperation = redoStack.pop(); // è·å–æœ€åä¸€é¡¹é‡åšæ“ä½œ
+            if (lastOperation.type == 1)               // 1 è¡¨ç¤ºæ’å…¥æ“ä½œ
             {
                 textStack.push(lastOperation.character);
             }
-            else if (lastOperation.type == 0) // 0 ±íÊ¾É¾³ı²Ù×÷
+            else if (lastOperation.type == 0) // 0 è¡¨ç¤ºåˆ é™¤æ“ä½œ
             {
                 textStack.pop();
             }
-            else if (lastOperation.type == 2) // 2 ±íÊ¾Õ³Ìù²Ù×÷£¬ÖØ×öÊ±Ìí¼ÓÕ³ÌùµÄÎÄ±¾
+            else if (lastOperation.type == 2) // 2 è¡¨ç¤ºç²˜è´´æ“ä½œï¼Œé‡åšæ—¶æ·»åŠ ç²˜è´´çš„æ–‡æœ¬
             {
-                const string &textToRedo = lastOperation.pastedText; // ¶ÁÈ¡Õ³ÌùµÄÎÄ±¾
-                // ·´Ïò²åÈëÕ³ÌùµÄÎÄ±¾£¬È·±£Ë³ĞòÕıÈ·
+                const string &textToRedo = lastOperation.pastedText; // è¯»å–ç²˜è´´çš„æ–‡æœ¬
+                // åå‘æ’å…¥ç²˜è´´çš„æ–‡æœ¬ï¼Œç¡®ä¿é¡ºåºæ­£ç¡®
                 for (size_t i = lastOperation.pastedText.size(); i > 0; --i)
                 {
-                    textStack.push(textToRedo[i - 1]); // ´ÓºóÏòÇ°²åÈë×Ö·û
+                    textStack.push(textToRedo[i - 1]); // ä»åå‘å‰æ’å…¥å­—ç¬¦
                 }
             }
-            undoStack.push(lastOperation); // ½«ÖØ×öµÄ²Ù×÷Ñ¹»Ø³·ÏúÕ»
+            undoStack.push(lastOperation); // å°†é‡åšçš„æ“ä½œå‹å›æ’¤é”€æ ˆ
         }
         else
         {
-            showErrorWithDelay("Ã»ÓĞ¿ÉÒÔÖØ×öµÄ²Ù×÷£¡", 1000); // ÌáÊ¾ÓÃ»§Ã»ÓĞ¿ÉÖØ×ö²Ù×÷
+            showErrorWithDelay("æ²¡æœ‰å¯ä»¥é‡åšçš„æ“ä½œï¼", 1000); // æç¤ºç”¨æˆ·æ²¡æœ‰å¯é‡åšæ“ä½œ
         }
     }
 
-    // ¸´ÖÆµ½¼ôÌù°å
+    // å¤åˆ¶åˆ°å‰ªè´´æ¿
     void copy()
     {
-        clipboard.clear();     // Çå¿Õ¼ôÌù°å
-        Stack<char> tempStack; // ÁÙÊ±Õ»£¬±£³ÖÎÄ±¾Õ»ÍêÕû
+        clipboard.clear();     // æ¸…ç©ºå‰ªè´´æ¿
+        Stack<char> tempStack; // ä¸´æ—¶æ ˆï¼Œä¿æŒæ–‡æœ¬æ ˆå®Œæ•´
 
-        // ½«ÎÄ±¾ÄÚÈİ¸´ÖÆµ½¼ôÌù°å
-        // ±éÀúÎÄ±¾Õ»£¬½«ÄÚÈİÖğ¸öÈ¡³ö²¢Ìí¼Óµ½¼ôÌù°å
+        // å°†æ–‡æœ¬å†…å®¹å¤åˆ¶åˆ°å‰ªè´´æ¿
+        // éå†æ–‡æœ¬æ ˆï¼Œå°†å†…å®¹é€ä¸ªå–å‡ºå¹¶æ·»åŠ åˆ°å‰ªè´´æ¿
         while (!textStack.isEmpty())
         {
             char c = textStack.pop();
-            clipboard += c;    // Ìí¼Óµ½¼ôÌù°å
-            tempStack.push(c); // ½«ÄÚÈİ±£´æµ½ÁÙÊ±Õ»
+            clipboard += c;    // æ·»åŠ åˆ°å‰ªè´´æ¿
+            tempStack.push(c); // å°†å†…å®¹ä¿å­˜åˆ°ä¸´æ—¶æ ˆ
         }
 
-        // ½«ÄÚÈİ·Å»ØÔ­Õ»£¬È·±£ÎÄ±¾Õ»µÄÍêÕû
+        // å°†å†…å®¹æ”¾å›åŸæ ˆï¼Œç¡®ä¿æ–‡æœ¬æ ˆçš„å®Œæ•´
         while (!tempStack.isEmpty())
         {
             textStack.push(tempStack.pop());
         }
 
-        showErrorWithDelay("ÎÄ±¾ÒÑ¸´ÖÆµ½¼ôÌù°å£¡", 1000); // ÌáÊ¾ĞÅÏ¢
+        showErrorWithDelay("æ–‡æœ¬å·²å¤åˆ¶åˆ°å‰ªè´´æ¿ï¼", 1000); // æç¤ºä¿¡æ¯
     }
 
-    // ´Ó¼ôÌù°åÕ³Ìù
+    // ä»å‰ªè´´æ¿ç²˜è´´
     void paste()
     {
-        if (clipboard.empty()) // ÅĞ¶Ï¼ôÌù°åÊÇ·ñÎª¿Õ
+        if (clipboard.empty()) // åˆ¤æ–­å‰ªè´´æ¿æ˜¯å¦ä¸ºç©º
         {
-            showErrorWithDelay("¼ôÌù°åÎª¿Õ£¬ÎŞ·¨Õ³Ìù£¡", 1000);
+            showErrorWithDelay("å‰ªè´´æ¿ä¸ºç©ºï¼Œæ— æ³•ç²˜è´´ï¼", 1000);
             return;
         }
 
-        // ÏÈ±£´æµ±Ç°ÎÄ±¾ÄÚÈİµÄ¿ìÕÕ£¬±ãÓÚ³·ÏúºÍÖØ×ö²Ù×÷
+        // å…ˆä¿å­˜å½“å‰æ–‡æœ¬å†…å®¹çš„å¿«ç…§ï¼Œä¾¿äºæ’¤é”€å’Œé‡åšæ“ä½œ
         size_t originalSize = textStack.size();
 
-        // ½«¼ôÌù°åÄÚÈİÖğ¸ö²åÈëµ½ÎÄ±¾¶ÑÕ»ÖĞ ·´Ïò±éÀú±£Ö¤Õ³ÌùµÄË³ĞòÕıÈ·
+        // å°†å‰ªè´´æ¿å†…å®¹é€ä¸ªæ’å…¥åˆ°æ–‡æœ¬å †æ ˆä¸­ åå‘éå†ä¿è¯ç²˜è´´çš„é¡ºåºæ­£ç¡®
         for (size_t i = clipboard.size(); i > 0; --i)
         {
             textStack.push(clipboard[i - 1]);
         }
 
-        // ½«Õû¸öÕ³Ìù²Ù×÷¼ÇÂ¼ÔÚ³·ÏúÕ»ÖĞ
+        // å°†æ•´ä¸ªç²˜è´´æ“ä½œè®°å½•åœ¨æ’¤é”€æ ˆä¸­
         Operation pasteOperation;
-        pasteOperation.type = 2;               // 2 ±íÊ¾Õ³Ìù²Ù×÷
-        pasteOperation.pastedText = clipboard; // ¼ÇÂ¼Õ³ÌùµÄÎÄ±¾
+        pasteOperation.type = 2;               // 2 è¡¨ç¤ºç²˜è´´æ“ä½œ
+        pasteOperation.pastedText = clipboard; // è®°å½•ç²˜è´´çš„æ–‡æœ¬
 
-        undoStack.push(pasteOperation); // ½«Õ³Ìù²Ù×÷Ìí¼Óµ½³·ÏúÕ»
+        undoStack.push(pasteOperation); // å°†ç²˜è´´æ“ä½œæ·»åŠ åˆ°æ’¤é”€æ ˆ
 
-        // Çå¿ÕÖØ×öÕ»
+        // æ¸…ç©ºé‡åšæ ˆ
         while (!redoStack.isEmpty())
             redoStack.pop();
     }
 
-    // ÏÔÊ¾µ±Ç°ÎÄ±¾ÄÚÈİ
+    // æ˜¾ç¤ºå½“å‰æ–‡æœ¬å†…å®¹
     void displayText()
     {
-        static int lastLineCount = 0;                                     // ¸ú×ÙÉÏÒ»´ÎÏÔÊ¾µÄĞĞÊı
-        COORD coord = {0, 0};                                             // ×ø±ê (0, 0)
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); // ÉèÖÃ¹â±êÎ»ÖÃ
+        static int lastLineCount = 0;                                     // è·Ÿè¸ªä¸Šä¸€æ¬¡æ˜¾ç¤ºçš„è¡Œæ•°
+        COORD coord = {0, 0};                                             // åæ ‡ (0, 0)
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); // è®¾ç½®å…‰æ ‡ä½ç½®
 
-        string currentText = textStack.toString(); // »ñÈ¡Õ»ÄÚÈİ²¢×ª»»Îª×Ö·û´®
+        string currentText = textStack.toString(); // è·å–æ ˆå†…å®¹å¹¶è½¬æ¢ä¸ºå­—ç¬¦ä¸²
 
-        // ¼ÆËãÊä³öĞĞÊı µÚÒ»ĞĞÌØÀı·Ö¿ªËã
+        // è®¡ç®—è¾“å‡ºè¡Œæ•° ç¬¬ä¸€è¡Œç‰¹ä¾‹åˆ†å¼€ç®—
         int totalLines;
         if (currentText.length() < 111)
             totalLines = 1;
         else
-            totalLines = ((currentText.length() - 111) / 120) + 2; // ÒÔ±¾ÈËµ÷ÊÔ´°¿Ú´óĞ¡Îª×¼
+            totalLines = ((currentText.length() - 111) / 120) + 2; // ä»¥æœ¬äººè°ƒè¯•çª—å£å¤§å°ä¸ºå‡†
 
-        // Èç¹ûµ±Ç°ĞĞÊıÓëÉÏ´ÎĞĞÊı²»Í¬£¬Ôò½øĞĞÇåÆÁ²Ù×÷£¬Í¬ÑùÊÇÎªÁË»º½âÉÁÆÁ
+        // å¦‚æœå½“å‰è¡Œæ•°ä¸ä¸Šæ¬¡è¡Œæ•°ä¸åŒï¼Œåˆ™è¿›è¡Œæ¸…å±æ“ä½œï¼ŒåŒæ ·æ˜¯ä¸ºäº†ç¼“è§£é—ªå±
         if (totalLines != lastLineCount)
         {
-            system("cls");              // ÇåÆÁ²Ù×÷
-            lastLineCount = totalLines; // ¸üĞÂÉÏÒ»´ÎµÄĞĞÊı
+            system("cls");              // æ¸…å±æ“ä½œ
+            lastLineCount = totalLines; // æ›´æ–°ä¸Šä¸€æ¬¡çš„è¡Œæ•°
         }
 
-        // ²âÊÔ²Ù×÷ÏÔÊ¾Íê²Ù×÷ÈÕÖ¾ºóÇåÆÁ
+        // æµ‹è¯•æ“ä½œæ˜¾ç¤ºå®Œæ“ä½œæ—¥å¿—åæ¸…å±
         if (IsTest)
         {
-            system("cls"); // ÇåÆÁ
-            IsTest = 0;    // »Ö¸´£¬ÒÔ±ã¶à´Î²âÊÔ
+            system("cls"); // æ¸…å±
+            IsTest = 0;    // æ¢å¤ï¼Œä»¥ä¾¿å¤šæ¬¡æµ‹è¯•
         }
 
-        cout << string(100, ' ') << "\rµ±Ç°ÎÄ±¾: "; // Çå³ıµ±Ç°ĞĞ
-        cout << currentText;                        // Êä³öÎÄ±¾
+        cout << string(100, ' ') << "\rå½“å‰æ–‡æœ¬: "; // æ¸…é™¤å½“å‰è¡Œ
+        cout << currentText;                        // è¾“å‡ºæ–‡æœ¬
 
-        COORD newCoord = {0, static_cast<SHORT>(totalLines + 1)};            // ÔÚÎÄ±¾ÏÂ·½Êä³ö
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), newCoord); // ÉèÖÃ¹â±êÎ»ÖÃ
+        COORD newCoord = {0, static_cast<SHORT>(totalLines + 1)};            // åœ¨æ–‡æœ¬ä¸‹æ–¹è¾“å‡º
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), newCoord); // è®¾ç½®å…‰æ ‡ä½ç½®
 
-        // Êä³ö°´¼ü½éÉÜºÍ±¨´íÌáÊ¾
-        cout << "É¾³ı(Backspace), ¸´ÖÆ(Ctrl+C), Õ³Ìù(Ctrl+V), ³·Ïú²Ù×÷(Ctrl+Z), ÖØ×ö²Ù×÷(Ctrl+Y), ²âÊÔ(F1), ÍË³ö(Esc)" << endl;
+        // è¾“å‡ºæŒ‰é”®ä»‹ç»å’ŒæŠ¥é”™æç¤º
+        cout << "åˆ é™¤(Backspace), å¤åˆ¶(Ctrl+C), ç²˜è´´(Ctrl+V), æ’¤é”€æ“ä½œ(Ctrl+Z), é‡åšæ“ä½œ(Ctrl+Y), æµ‹è¯•(F1), é€€å‡º(Esc)" << endl;
 
-        // ÉèÖÃ¹â±êÎ»ÖÃµ½ÎÄ±¾Ä©Î²
+        // è®¾ç½®å…‰æ ‡ä½ç½®åˆ°æ–‡æœ¬æœ«å°¾
         short newCoord_x, newCoord_y = totalLines;
         if (totalLines == 1)
-            newCoord_x = currentText.length() + 9; // ÒòÎªµÚÒ»ĞĞÓĞ "µ±Ç°ÎÄ±¾£º"
+            newCoord_x = currentText.length() + 9; // å› ä¸ºç¬¬ä¸€è¡Œæœ‰ "å½“å‰æ–‡æœ¬ï¼š"
         else
-            newCoord_x = (currentText.length() - 111) % 120;                 // ºóÃæÕı³£¼ÆËã
-        newCoord = {newCoord_x, newCoord_y};                                 // ¼ÆËãÄ©Î²×ø±ê
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), newCoord); // ÉèÖÃ¹â±êÎ»ÖÃ
+            newCoord_x = (currentText.length() - 111) % 120;                 // åé¢æ­£å¸¸è®¡ç®—
+        newCoord = {newCoord_x, newCoord_y};                                 // è®¡ç®—æœ«å°¾åæ ‡
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), newCoord); // è®¾ç½®å…‰æ ‡ä½ç½®
     }
 
-    // ÏÔÊ¾´íÎóĞÅÏ¢
+    // æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
     void displayError(const string &message)
     {
-        string currentText = textStack.toString(); // »ñÈ¡Õ»ÄÚÈİ²¢×ª»»Îª×Ö·û´®
-        int totalLines;                            // Í¬ÉÏ²Ù×÷
+        string currentText = textStack.toString(); // è·å–æ ˆå†…å®¹å¹¶è½¬æ¢ä¸ºå­—ç¬¦ä¸²
+        int totalLines;                            // åŒä¸Šæ“ä½œ
         if (currentText.length() < 111)
             totalLines = 1;
         else
-            totalLines = ((currentText.length() - 111) / 120) + 2;           // ÒÔ±¾ÈËµ÷ÊÔ´°¿Ú´óĞ¡Îª×¼
-        COORD newCoord = {0, static_cast<SHORT>(totalLines + 1)};            // ÔÚÎÄ±¾ÏÂ·½Êä³ö
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), newCoord); // ÉèÖÃ¹â±êÎ»ÖÃ
-        cout << string(100, ' ');                                            // Çå³ıµ±Ç°ĞĞÄÚÈİ
-        cout << "\r" << message;                                             // Êä³ö´íÎóĞÅÏ¢
-        cout.flush();                                                        // Ë¢ĞÂÊä³öÁ÷
+            totalLines = ((currentText.length() - 111) / 120) + 2;           // ä»¥æœ¬äººè°ƒè¯•çª—å£å¤§å°ä¸ºå‡†
+        COORD newCoord = {0, static_cast<SHORT>(totalLines + 1)};            // åœ¨æ–‡æœ¬ä¸‹æ–¹è¾“å‡º
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), newCoord); // è®¾ç½®å…‰æ ‡ä½ç½®
+        cout << string(100, ' ');                                            // æ¸…é™¤å½“å‰è¡Œå†…å®¹
+        cout << "\r" << message;                                             // è¾“å‡ºé”™è¯¯ä¿¡æ¯
+        cout.flush();                                                        // åˆ·æ–°è¾“å‡ºæµ
     }
 
-    // ÑÓ³¤´íÎóĞÅÏ¢ÏÔÊ¾Ê±¼ä
+    // å»¶é•¿é”™è¯¯ä¿¡æ¯æ˜¾ç¤ºæ—¶é—´
     void showErrorWithDelay(const string &message, int delay)
     {
-        displayError(message); // ÏÔÊ¾´íÎóĞÅÏ¢
-        Sleep(delay);          // ÑÓ³ÙÖ¸¶¨Ê±¼ä
-        displayError("");      // Çå³ı´íÎóĞÅÏ¢
-        displayText();         // ÔÚÎÄ±¾ÏÂÃæÖØĞÂÊä³ö°´¼ü½éÉÜ
+        displayError(message); // æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
+        Sleep(delay);          // å»¶è¿ŸæŒ‡å®šæ—¶é—´
+        displayError("");      // æ¸…é™¤é”™è¯¯ä¿¡æ¯
+        displayText();         // åœ¨æ–‡æœ¬ä¸‹é¢é‡æ–°è¾“å‡ºæŒ‰é”®ä»‹ç»
     }
 
-    // ÉèÖÃÊä³ö²âÊÔĞÅÏ¢Ê±¹â±êÎ»ÖÃ
+    // è®¾ç½®è¾“å‡ºæµ‹è¯•ä¿¡æ¯æ—¶å…‰æ ‡ä½ç½®
     void setTestCursor()
     {
-        // »ñÈ¡Õ»ÄÚÈİ²¢×ª»»Îª×Ö·û´®
+        // è·å–æ ˆå†…å®¹å¹¶è½¬æ¢ä¸ºå­—ç¬¦ä¸²
         string currentText = textStack.toString();
 
-        // ¼ÆËãÊä³öĞĞÊı Í¬ÉÏ²Ù×÷
+        // è®¡ç®—è¾“å‡ºè¡Œæ•° åŒä¸Šæ“ä½œ
         int totalLines;
         if (currentText.length() < 111)
             totalLines = 1;
         else
-            totalLines = ((currentText.length() - 111) / 120) + 2; // ÒÔ±¾ÈËµ÷ÊÔ´°¿Ú´óĞ¡Îª×¼
+            totalLines = ((currentText.length() - 111) / 120) + 2; // ä»¥æœ¬äººè°ƒè¯•çª—å£å¤§å°ä¸ºå‡†
 
-        COORD newCoord = {0, static_cast<SHORT>(totalLines + 2)};            // ÔÚÎÄ±¾ÏÂ·½Êä³ö
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), newCoord); // ÉèÖÃ¹â±êÎ»ÖÃ
+        COORD newCoord = {0, static_cast<SHORT>(totalLines + 2)};            // åœ¨æ–‡æœ¬ä¸‹æ–¹è¾“å‡º
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), newCoord); // è®¾ç½®å…‰æ ‡ä½ç½®
     }
 
-    // Çå¿ÕÎÄ±¾Õ»
+    // æ¸…ç©ºæ–‡æœ¬æ ˆ
     void clearTextStack()
     {
         while (!textStack.isEmpty())
         {
-            textStack.pop(); // É¾³ı×Ö·û
+            textStack.pop(); // åˆ é™¤å­—ç¬¦
         }
     }
 
-    // ÑÓ³¤²Ù×÷ĞÅÏ¢ÏÔÊ¾Ê±¼ä
+    // å»¶é•¿æ“ä½œä¿¡æ¯æ˜¾ç¤ºæ—¶é—´
     void showOperationWithDelay(const string &message, int delay)
     {
-        setTestCursor(); // °Ñ¹â±êÒÆµ½ÎÄ±¾ÏÂ·½ÒÔÊä³ö²Ù×÷ĞÅÏ¢
+        setTestCursor(); // æŠŠå…‰æ ‡ç§»åˆ°æ–‡æœ¬ä¸‹æ–¹ä»¥è¾“å‡ºæ“ä½œä¿¡æ¯
         cout << "\r" << message;
         cout.flush();
-        Sleep(delay); // ÑÓÊ±
+        Sleep(delay); // å»¶æ—¶
         cout << "\r" << string(100, ' ') << "\r";
-        displayText(); // ÖØĞÂÏÔÊ¾ÎÄ±¾
+        displayText(); // é‡æ–°æ˜¾ç¤ºæ–‡æœ¬
     }
 
-    // ×·¼ÓÈÕÖ¾µ½ÈÕÖ¾Êı×é
+    // è¿½åŠ æ—¥å¿—åˆ°æ—¥å¿—æ•°ç»„
     void appendLog(const string &log)
     {
-        if (logIndex + log.size() >= MAX_LOG_SIZE) // ¼ìÑéÈÕÖ¾ÈİÁ¿
+        if (logIndex + log.size() >= MAX_LOG_SIZE) // æ£€éªŒæ—¥å¿—å®¹é‡
         {
-            cout << "ÈÕÖ¾ÒÑÂú£¬ÎŞ·¨¼ÌĞøĞ´Èë¡£" << endl; // ÈÕÖ¾ÒÑÂú¾ÍÌáÊ¾
+            cout << "æ—¥å¿—å·²æ»¡ï¼Œæ— æ³•ç»§ç»­å†™å…¥ã€‚" << endl; // æ—¥å¿—å·²æ»¡å°±æç¤º
             return;
         }
-        for (size_t i = 0; i < log.size(); ++i) // ½«ÈÕÖ¾×Ö·û´®ÖĞµÄÃ¿¸ö×Ö·ûÖğ¸ö´æ´¢µ½Êı×éÖĞ
+        for (size_t i = 0; i < log.size(); ++i) // å°†æ—¥å¿—å­—ç¬¦ä¸²ä¸­çš„æ¯ä¸ªå­—ç¬¦é€ä¸ªå­˜å‚¨åˆ°æ•°ç»„ä¸­
         {
             operationLogs[logIndex++] = log[i];
         }
-        operationLogs[logIndex++] = '\n'; // Ã¿ÌõÈÕÖ¾ºóÌí¼Ó»»ĞĞ·û
+        operationLogs[logIndex++] = '\n'; // æ¯æ¡æ—¥å¿—åæ·»åŠ æ¢è¡Œç¬¦
     }
 
-    // ½«ÈÕÖ¾Ğ´ÈëÎÄ¼ş
+    // å°†æ—¥å¿—å†™å…¥æ–‡ä»¶
     void saveLogToFile(const string &filename, TextEditor &editor)
     {
-        ofstream outFile(filename.c_str(), ios::app); // ´´½¨Ò»¸öÊä³öÎÄ¼şÁ÷¶ÔÏó
-        if (!outFile)                                 // ¼ì²éÎÄ¼şÊÇ·ñ³É¹¦´ò¿ª
+        ofstream outFile(filename.c_str(), ios::app); // åˆ›å»ºä¸€ä¸ªè¾“å‡ºæ–‡ä»¶æµå¯¹è±¡
+        if (!outFile)                                 // æ£€æŸ¥æ–‡ä»¶æ˜¯å¦æˆåŠŸæ‰“å¼€
         {
-            editor.setTestCursor();                       // ÒÆ¶¯¹â±êµ½ÊÊµ±Î»ÖÃ
-            cerr << "ÎŞ·¨´ò¿ªÎÄ¼ş: " << filename << endl; // ÌáÊ¾ĞÅÏ¢
+            editor.setTestCursor();                       // ç§»åŠ¨å…‰æ ‡åˆ°é€‚å½“ä½ç½®
+            cerr << "æ— æ³•æ‰“å¼€æ–‡ä»¶: " << filename << endl; // æç¤ºä¿¡æ¯
             return;
         }
 
-        outFile.write(operationLogs, logIndex);           // ½«ÈÕÖ¾ÄÚÈİĞ´ÈëÎÄ¼ş
-        outFile.close();                                  // ¹Ø±ÕÎÄ¼ş
-        editor.setTestCursor();                           // ÒÆ¶¯¹â±êµ½ÊÊµ±Î»ÖÃ
-        cout << "ÈÕÖ¾ÒÑ±£´æµ½ÎÄ¼ş: " << filename << endl; // ÌáÊ¾ĞÅÏ¢
+        outFile.write(operationLogs, logIndex);           // å°†æ—¥å¿—å†…å®¹å†™å…¥æ–‡ä»¶
+        outFile.close();                                  // å…³é—­æ–‡ä»¶
+        editor.setTestCursor();                           // ç§»åŠ¨å…‰æ ‡åˆ°é€‚å½“ä½ç½®
+        cout << "æ—¥å¿—å·²ä¿å­˜åˆ°æ–‡ä»¶: " << filename << endl; // æç¤ºä¿¡æ¯
     }
 
-    // Ä£Äâ¼üÅÌ°´¼üÊÂ¼şµÄº¯Êı
+    // æ¨¡æ‹Ÿé”®ç›˜æŒ‰é”®äº‹ä»¶çš„å‡½æ•°
     void simulateKey(WORD virtualKey, bool isPress)
     {
-        INPUT input = {0};           // ³õÊ¼»¯ÊäÈë½á¹¹Ìå
-        input.type = INPUT_KEYBOARD; // ±íÊ¾¸ÃÊäÈëÊÂ¼şÊÇÒ»¸ö¼üÅÌÊÂ¼ş
-        input.ki.wVk = virtualKey;   // ÉèÖÃĞéÄâ°´¼üÂë
+        INPUT input = {0};           // åˆå§‹åŒ–è¾“å…¥ç»“æ„ä½“
+        input.type = INPUT_KEYBOARD; // è¡¨ç¤ºè¯¥è¾“å…¥äº‹ä»¶æ˜¯ä¸€ä¸ªé”®ç›˜äº‹ä»¶
+        input.ki.wVk = virtualKey;   // è®¾ç½®è™šæ‹ŸæŒ‰é”®ç 
 
-        input.ki.dwFlags = isPress ? 0 : KEYEVENTF_KEYUP; // ÅĞ¶ÏÊÇ°´ÏÂ»¹ÊÇÊÍ·Å
-        // Èç¹û isPress Îª true£¬ÔòÉèÖÃÎª 0£¬±íÊ¾°´ÏÂÊÂ¼ş
-        // Èç¹û isPress Îª false£¬ÔòÉèÖÃÎª KEYEVENTF_KEYUP£¬±íÊ¾ÊÍ·ÅÊÂ¼ş
+        input.ki.dwFlags = isPress ? 0 : KEYEVENTF_KEYUP; // åˆ¤æ–­æ˜¯æŒ‰ä¸‹è¿˜æ˜¯é‡Šæ”¾
+        // å¦‚æœ isPress ä¸º trueï¼Œåˆ™è®¾ç½®ä¸º 0ï¼Œè¡¨ç¤ºæŒ‰ä¸‹äº‹ä»¶
+        // å¦‚æœ isPress ä¸º falseï¼Œåˆ™è®¾ç½®ä¸º KEYEVENTF_KEYUPï¼Œè¡¨ç¤ºé‡Šæ”¾äº‹ä»¶
 
-        SendInput(1, &input, sizeof(INPUT)); // ·¢ËÍÊäÈëÊÂ¼ş
+        SendInput(1, &input, sizeof(INPUT)); // å‘é€è¾“å…¥äº‹ä»¶
 
-        // ÎªÁË¹Û²ìĞ§¹û£¬Ìí¼ÓÒ»Ğ©ÑÓ³Ù
+        // ä¸ºäº†è§‚å¯Ÿæ•ˆæœï¼Œæ·»åŠ ä¸€äº›å»¶è¿Ÿ
         Sleep(100);
     }
 
-    // Ä£ÄâÎÄ±¾ÊäÈë£¬Çø·Ö´óĞ¡Ğ´×ÖÄ¸
+    // æ¨¡æ‹Ÿæ–‡æœ¬è¾“å…¥ï¼ŒåŒºåˆ†å¤§å°å†™å­—æ¯
     void simulateTextInput(const string &text, TextEditor &editor)
     {
-        for (size_t i = 0; i < text.size(); ++i) // ±éÀúËæ»úÉú³ÉµÄ×Ö·û´®
+        for (size_t i = 0; i < text.size(); ++i) // éå†éšæœºç”Ÿæˆçš„å­—ç¬¦ä¸²
         {
             char ch = text[i];
-            bool isUpperCase = isupper(ch);    // ÅĞ¶ÏÊÇ·ñÊÇ´óĞ´×ÖÄ¸
-            SHORT vk = VkKeyScan(tolower(ch)); // »ñÈ¡¶ÔÓ¦µÄĞ¡Ğ´×ÖÄ¸ĞéÄâ°´¼üÂë
-            BYTE vkCode = LOBYTE(vk);          // ÌáÈ¡ĞéÄâ°´¼üÂë
+            bool isUpperCase = isupper(ch);    // åˆ¤æ–­æ˜¯å¦æ˜¯å¤§å†™å­—æ¯
+            SHORT vk = VkKeyScan(tolower(ch)); // è·å–å¯¹åº”çš„å°å†™å­—æ¯è™šæ‹ŸæŒ‰é”®ç 
+            BYTE vkCode = LOBYTE(vk);          // æå–è™šæ‹ŸæŒ‰é”®ç 
 
-            // Èç¹ûÊÇ´óĞ´×ÖÄ¸£¬ÏÈ°´×¡ Shift ¼ü
+            // å¦‚æœæ˜¯å¤§å†™å­—æ¯ï¼Œå…ˆæŒ‰ä½ Shift é”®
             if (isUpperCase)
             {
-                simulateKey(VK_SHIFT, true); // °´ÏÂ Shift ¼ü
+                simulateKey(VK_SHIFT, true); // æŒ‰ä¸‹ Shift é”®
             }
 
-            showOperationWithDelay("Ä£Äâ°´¼üÊäÈë: " + string(1, ch), 500); // ÏÔÊ¾²Ù×÷ĞÅÏ¢
-            appendLog("Ä£Äâ°´¼üÊäÈë: " + string(1, ch));                   // ½«°´¼üÊäÈë¼ÇÂ¼µ½ÈÕÖ¾
-            simulateKey(vkCode, true);                                     // °´ÏÂ°´¼ü
-            Sleep(100);                                                    // ÑÓ³Ù£¬¹Û²ìÊäÈëĞ§¹û
-            simulateKey(vkCode, false);                                    // ÊÍ·Å°´¼ü
+            showOperationWithDelay("æ¨¡æ‹ŸæŒ‰é”®è¾“å…¥: " + string(1, ch), 500); // æ˜¾ç¤ºæ“ä½œä¿¡æ¯
+            appendLog("æ¨¡æ‹ŸæŒ‰é”®è¾“å…¥: " + string(1, ch));                   // å°†æŒ‰é”®è¾“å…¥è®°å½•åˆ°æ—¥å¿—
+            simulateKey(vkCode, true);                                     // æŒ‰ä¸‹æŒ‰é”®
+            Sleep(100);                                                    // å»¶è¿Ÿï¼Œè§‚å¯Ÿè¾“å…¥æ•ˆæœ
+            simulateKey(vkCode, false);                                    // é‡Šæ”¾æŒ‰é”®
 
-            // Èç¹ûÊÇ´óĞ´×ÖÄ¸£¬ÊÍ·Å Shift ¼ü
+            // å¦‚æœæ˜¯å¤§å†™å­—æ¯ï¼Œé‡Šæ”¾ Shift é”®
             if (isUpperCase)
             {
-                simulateKey(VK_SHIFT, false); // ÊÍ·ÅShift¼ü
+                simulateKey(VK_SHIFT, false); // é‡Šæ”¾Shifté”®
             }
-            Sleep(100); // ÔÚÃ¿¸ö×Ö·ûÖ®¼äÌí¼ÓÑÓ³Ù
+            Sleep(100); // åœ¨æ¯ä¸ªå­—ç¬¦ä¹‹é—´æ·»åŠ å»¶è¿Ÿ
         }
     }
 
-    // Ä£ÄâBackspace¼ü
+    // æ¨¡æ‹ŸBackspaceé”®
     void simulateBackspaceKey(TextEditor &editor)
     {
-        showOperationWithDelay("Ä£Äâ°´ÏÂBackspace¼ü", 1000); // ÌáÊ¾ĞÅÏ¢
-        appendLog("°´ÏÂBackspace¼ü");
-        simulateKey(VK_BACK, true);  // °´ÏÂBackspace¼ü
-        Sleep(100);                  // ÑÓ³Ù
-        simulateKey(VK_BACK, false); // ÊÍ·ÅBackspace¼ü
-        Sleep(100);                  // ÑÓ³Ù
+        showOperationWithDelay("æ¨¡æ‹ŸæŒ‰ä¸‹Backspaceé”®", 1000); // æç¤ºä¿¡æ¯
+        appendLog("æŒ‰ä¸‹Backspaceé”®");
+        simulateKey(VK_BACK, true);  // æŒ‰ä¸‹Backspaceé”®
+        Sleep(100);                  // å»¶è¿Ÿ
+        simulateKey(VK_BACK, false); // é‡Šæ”¾Backspaceé”®
+        Sleep(100);                  // å»¶è¿Ÿ
     }
 
-    // Ä£Äâ Ctrl + Ö¸¶¨°´¼ü (ÀıÈç Ctrl + Z, Ctrl + C)
+    // æ¨¡æ‹Ÿ Ctrl + æŒ‡å®šæŒ‰é”® (ä¾‹å¦‚ Ctrl + Z, Ctrl + C)
     void simulateCtrlKey(WORD key, TextEditor &editor)
     {
-        showOperationWithDelay("Ä£Äâ°´ÏÂCtrl + " + string(1, key), 1000); // ÌáÊ¾ĞÅÏ¢
-        appendLog("°´ÏÂCtrl + " + string(1, key));                        // Ğ´½ø²Ù×÷ÈÕÖ¾
+        showOperationWithDelay("æ¨¡æ‹ŸæŒ‰ä¸‹Ctrl + " + string(1, key), 1000); // æç¤ºä¿¡æ¯
+        appendLog("æŒ‰ä¸‹Ctrl + " + string(1, key));                        // å†™è¿›æ“ä½œæ—¥å¿—
 
-        // °´ÏÂCtrl¼ü
+        // æŒ‰ä¸‹Ctrlé”®
         simulateKey(VK_CONTROL, true);
-        // °´ÏÂÖ¸¶¨¼ü
+        // æŒ‰ä¸‹æŒ‡å®šé”®
         simulateKey(key, true);
-        Sleep(100);              // ÑÓ³Ù
-        simulateKey(key, false); // ÊÍ·ÅÖ¸¶¨¼ü
-        Sleep(100);              // ÑÓ³Ù
-        // ÊÍ·ÅCtrl¼ü
+        Sleep(100);              // å»¶è¿Ÿ
+        simulateKey(key, false); // é‡Šæ”¾æŒ‡å®šé”®
+        Sleep(100);              // å»¶è¿Ÿ
+        // é‡Šæ”¾Ctrlé”®
         simulateKey(VK_CONTROL, false);
     }
 
-    // Éú³ÉËæ»ú²âÊÔÎÄ±¾
+    // ç”Ÿæˆéšæœºæµ‹è¯•æ–‡æœ¬
     string generateRandomText(int length)
     {
-        // ÉèÖÃÓÃÀ´Ëæ»úÉú³ÉµÄ×Ö·û
+        // è®¾ç½®ç”¨æ¥éšæœºç”Ÿæˆçš„å­—ç¬¦
         const string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        string randomText; // ´æ´¢Éú³ÉµÄ×Ö·û´®
+        string randomText; // å­˜å‚¨ç”Ÿæˆçš„å­—ç¬¦ä¸²
         for (int i = 0; i < length; ++i)
         {
-            randomText += characters[rand() % characters.size()]; // Ê¹ÓÃrandÉú³ÉËæ»ú×Ö·û
+            randomText += characters[rand() % characters.size()]; // ä½¿ç”¨randç”Ÿæˆéšæœºå­—ç¬¦
         }
-        return randomText; // ·µ»ØËæ»úÉú³ÉµÄ×Ö·û´®
+        return randomText; // è¿”å›éšæœºç”Ÿæˆçš„å­—ç¬¦ä¸²
     }
 };
 
-// »ñµÃ¹ÜÀíÔ±È¨ÏŞÒÔĞŞ¸Ä¿ØÖÆÌ¨´°¿Ú
+// è·å¾—ç®¡ç†å‘˜æƒé™ä»¥ä¿®æ”¹æ§åˆ¶å°çª—å£
 void RunAsAdmin()
 {
-    // ÅĞ¶Ïµ±Ç°³ÌĞòÊÇ·ñÒÔ¹ÜÀíÔ±Éí·İÔËĞĞ
+    // åˆ¤æ–­å½“å‰ç¨‹åºæ˜¯å¦ä»¥ç®¡ç†å‘˜èº«ä»½è¿è¡Œ
     BOOL isAdmin = FALSE;
     HANDLE hToken = NULL;
     TOKEN_ELEVATION te;
 
-    // »ñÈ¡µ±Ç°½ø³ÌµÄÁîÅÆ
+    // è·å–å½“å‰è¿›ç¨‹çš„ä»¤ç‰Œ
     if (OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))
     {
         DWORD dwSize;
@@ -539,230 +539,230 @@ void RunAsAdmin()
         CloseHandle(hToken);
     }
 
-    // Èç¹ûÃ»ÓĞ¹ÜÀíÔ±È¨ÏŞ£¬ÖØĞÂÆô¶¯³ÌĞòÒÔ»ñµÃÈ¨ÏŞ
+    // å¦‚æœæ²¡æœ‰ç®¡ç†å‘˜æƒé™ï¼Œé‡æ–°å¯åŠ¨ç¨‹åºä»¥è·å¾—æƒé™
     if (!isAdmin)
     {
-        // ¹¹Ôì³ÌĞòÂ·¾¶
+        // æ„é€ ç¨‹åºè·¯å¾„
         char path[MAX_PATH];
         GetModuleFileNameA(NULL, path, MAX_PATH);
 
-        // Ê¹ÓÃShellExecuteÒÔ¹ÜÀíÔ±Éí·İÔËĞĞ³ÌĞò
+        // ä½¿ç”¨ShellExecuteä»¥ç®¡ç†å‘˜èº«ä»½è¿è¡Œç¨‹åº
         ShellExecuteA(NULL, "runas", path, NULL, NULL, SW_SHOWNORMAL);
 
-        // ÖÕÖ¹µ±Ç°½ø³Ì
+        // ç»ˆæ­¢å½“å‰è¿›ç¨‹
         TerminateProcess(GetCurrentProcess(), 0);
     }
 }
 
-// ´¦Àí Ctrl + C ÊÂ¼ş£¬±ÜÃâ³ÌĞòÍË³ö
+// å¤„ç† Ctrl + C äº‹ä»¶ï¼Œé¿å…ç¨‹åºé€€å‡º
 BOOL WINAPI ConsoleHandler(DWORD signal)
 {
     if (signal == CTRL_C_EVENT)
     {
-        return TRUE; // ·µ»Ø TRUE ±íÊ¾ÒÑ´¦ÀíĞÅºÅ
+        return TRUE; // è¿”å› TRUE è¡¨ç¤ºå·²å¤„ç†ä¿¡å·
     }
-    return FALSE; // ·µ»Ø FALSE ±íÊ¾Î´´¦ÀíĞÅºÅ
+    return FALSE; // è¿”å› FALSE è¡¨ç¤ºæœªå¤„ç†ä¿¡å·
 }
 
-// ÇĞ»»Ó¢ÎÄÊäÈë·¨
+// åˆ‡æ¢è‹±æ–‡è¾“å…¥æ³•
 void SwitchInputLanguageToEnglish()
 {
-    // ¼ÓÔØ²¢¼¤»îÖ¸¶¨µÄ¼üÅÌ²¼¾Ö
-    HKL hkl = LoadKeyboardLayoutW(L"00000409", KLF_ACTIVATE); // Ó¢Óï£¨ÃÀ¹ú£©ÊäÈë·¨²¼¾Ö±êÊ¶·û
+    // åŠ è½½å¹¶æ¿€æ´»æŒ‡å®šçš„é”®ç›˜å¸ƒå±€
+    HKL hkl = LoadKeyboardLayoutW(L"00000409", KLF_ACTIVATE); // è‹±è¯­ï¼ˆç¾å›½ï¼‰è¾“å…¥æ³•å¸ƒå±€æ ‡è¯†ç¬¦
 
-    // ·¢ËÍÏûÏ¢ÒÔË¢ĞÂÊäÈë·¨
-    HWND hwnd = GetForegroundWindow(); // »ñÈ¡µ±Ç°»î¶¯´°¿Ú¾ä±ú
+    // å‘é€æ¶ˆæ¯ä»¥åˆ·æ–°è¾“å…¥æ³•
+    HWND hwnd = GetForegroundWindow(); // è·å–å½“å‰æ´»åŠ¨çª—å£å¥æŸ„
     if (hwnd != NULL)
     {
         PostMessage(hwnd, WM_INPUTLANGCHANGEREQUEST, 0, (LPARAM)hkl);
     }
 }
 
-// ÇĞ»»ÖĞÎÄÊäÈë·¨
+// åˆ‡æ¢ä¸­æ–‡è¾“å…¥æ³•
 void SwitchInputLanguageToChinese()
 {
-    // ¼ÓÔØ²¢¼¤»îÖ¸¶¨µÄ¼üÅÌ²¼¾Ö
-    HKL hkl = LoadKeyboardLayoutW(L"00000804", KLF_ACTIVATE); // Ó¢Óï£¨ÃÀ¹ú£©ÊäÈë·¨²¼¾Ö±êÊ¶·û
+    // åŠ è½½å¹¶æ¿€æ´»æŒ‡å®šçš„é”®ç›˜å¸ƒå±€
+    HKL hkl = LoadKeyboardLayoutW(L"00000804", KLF_ACTIVATE); // ç®€ä½“ä¸­æ–‡è¾“å…¥æ³•å¸ƒå±€æ ‡è¯†ç¬¦
 
-    // ·¢ËÍÏûÏ¢ÒÔË¢ĞÂÊäÈë·¨
-    HWND hwnd = GetForegroundWindow(); // »ñÈ¡µ±Ç°»î¶¯´°¿Ú¾ä±ú
+    // å‘é€æ¶ˆæ¯ä»¥åˆ·æ–°è¾“å…¥æ³•
+    HWND hwnd = GetForegroundWindow(); // è·å–å½“å‰æ´»åŠ¨çª—å£å¥æŸ„
     if (hwnd != NULL)
     {
         PostMessage(hwnd, WM_INPUTLANGCHANGEREQUEST, 0, (LPARAM)hkl);
     }
 }
 
-// Ïß³Ì¿ØÖÆµÄÈ«¾Ö±äÁ¿ ¶àÏß³Ì»·¾³
-atomic<bool> running(true); // ¿ØÖÆÖ÷Ñ­»·ÊÇ·ñÔËĞĞ
+// çº¿ç¨‹æ§åˆ¶çš„å…¨å±€å˜é‡ å¤šçº¿ç¨‹ç¯å¢ƒ
+atomic<bool> running(true); // æ§åˆ¶ä¸»å¾ªç¯æ˜¯å¦è¿è¡Œ
 
-// ²âÊÔ±à¼­Æ÷µÄ¹¦ÄÜ
+// æµ‹è¯•ç¼–è¾‘å™¨çš„åŠŸèƒ½
 void runTest(TextEditor &editor)
 {
 
-    // ¼à²â¼üÅÌÊÂ¼ş °´ÏÂ F1¾Í½øÈë²âÊÔ²Ù×÷
+    // ç›‘æµ‹é”®ç›˜äº‹ä»¶ æŒ‰ä¸‹ F1å°±è¿›å…¥æµ‹è¯•æ“ä½œ
     while (running)
     {
-        if (_kbhit() && _getch() == 59) // F1 ¼üµÄ ASCII ÖµÊÇ 59
+        if (_kbhit() && _getch() == 59) // F1 é”®çš„ ASCII å€¼æ˜¯ 59
         {
 
-            srand(time(0));                                                          // ³õÊ¼»¯Ëæ»úÊıÖÖ×Ó
-            string testText = editor.generateRandomText(6);                          // Éú³É6¸ö×Ö·ûµÄËæ»úÎÄ±¾
-            editor.clearTextStack();                                                 // Çå¿ÕÎÄ±¾Õ»
-            editor.setTestCursor();                                                  // ÉèÖÃ¹â±êÎ»ÖÃ
-            system("cls");                                                           // ÇåÆÁ
-            editor.displayText();                                                    // ÖØĞÂÏÔÊ¾ÎÄ±¾
-            editor.showOperationWithDelay("F1 ¼ü±»°´ÏÂ£¬¿ªÊ¼ÔËĞĞ²âÊÔ¹¦ÄÜ...", 1000); // ÌáÊ¾ĞÅÏ¢
+            srand(time(0));                                                          // åˆå§‹åŒ–éšæœºæ•°ç§å­
+            string testText = editor.generateRandomText(6);                          // ç”Ÿæˆ6ä¸ªå­—ç¬¦çš„éšæœºæ–‡æœ¬
+            editor.clearTextStack();                                                 // æ¸…ç©ºæ–‡æœ¬æ ˆ
+            editor.setTestCursor();                                                  // è®¾ç½®å…‰æ ‡ä½ç½®
+            system("cls");                                                           // æ¸…å±
+            editor.displayText();                                                    // é‡æ–°æ˜¾ç¤ºæ–‡æœ¬
+            editor.showOperationWithDelay("F1 é”®è¢«æŒ‰ä¸‹ï¼Œå¼€å§‹è¿è¡Œæµ‹è¯•åŠŸèƒ½...", 1000);   // æç¤ºä¿¡æ¯
 
-            editor.simulateTextInput(testText, editor); // Ä£ÄâÊäÈëÎÄ±¾
-            SwitchInputLanguageToChinese();             // ÇĞ»»ÖĞÎÄÊäÈë·¨Ê¹µÃÈÕÖ¾ÎÄ¼şÕı³£ÏÔÊ¾
-            editor.appendLog("ÊäÈëÎÄ±¾: " + testText);  // ¼ÇÂ¼µ½ÈÕÖ¾
-            Sleep(1000);
+            editor.simulateTextInput(testText, editor); // æ¨¡æ‹Ÿè¾“å…¥æ–‡æœ¬
+            SwitchInputLanguageToChinese();             // åˆ‡æ¢ä¸­æ–‡è¾“å…¥æ³•ä½¿å¾—æ—¥å¿—æ–‡ä»¶æ­£å¸¸æ˜¾ç¤º
+            editor.appendLog("è¾“å…¥æ–‡æœ¬: " + testText);  // è®°å½•åˆ°æ—¥å¿—
+            Sleep(1000);                                // æ¯æ¬¡æ“ä½œä¹‹é—´æš‚åœ1ç§’
 
-            // ÏÈËÄ¸ö²Ù×÷°´Ë³ĞòÄ£ÄâÒ»´Î ÔÙ½øĞĞËæ»úµÄÎå¸ö²Ù×÷
-            // Ä£Äâ¸´ÖÆ²Ù×÷ Ctrl + C
+            // å…ˆå››ä¸ªæ“ä½œæŒ‰é¡ºåºæ¨¡æ‹Ÿä¸€æ¬¡ å†è¿›è¡Œéšæœºçš„äº”ä¸ªæ“ä½œ
+            // æ¨¡æ‹Ÿå¤åˆ¶æ“ä½œ Ctrl + C
             editor.simulateCtrlKey('C', editor);
-            editor.appendLog("Ö´ĞĞ¸´ÖÆ²Ù×÷"); // ¼ÇÂ¼µ½ÈÕÖ¾
-            Sleep(1000);                      // Ã¿´Î²Ù×÷Ö®¼äÔİÍ£1Ãë
+            editor.appendLog("æ‰§è¡Œå¤åˆ¶æ“ä½œ"); // è®°å½•åˆ°æ—¥å¿—
+            Sleep(1000);                      // æ¯æ¬¡æ“ä½œä¹‹é—´æš‚åœ1ç§’
 
-            // Ä£ÄâÕ³Ìù²Ù×÷ Ctrl + V
+            // æ¨¡æ‹Ÿç²˜è´´æ“ä½œ Ctrl + V
             editor.simulateCtrlKey('V', editor);
-            editor.appendLog("Ö´ĞĞÕ³Ìù²Ù×÷"); // ¼ÇÂ¼µ½ÈÕÖ¾
-            Sleep(1000);                      // Ã¿´Î²Ù×÷Ö®¼äÔİÍ£1Ãë
+            editor.appendLog("æ‰§è¡Œç²˜è´´æ“ä½œ"); // è®°å½•åˆ°æ—¥å¿—
+            Sleep(1000);                      // æ¯æ¬¡æ“ä½œä¹‹é—´æš‚åœ1ç§’
 
-            // Ä£Äâ³·Ïú²Ù×÷ Ctrl + Z
+            // æ¨¡æ‹Ÿæ’¤é”€æ“ä½œ Ctrl + Z
             editor.simulateCtrlKey('Z', editor);
-            editor.appendLog("Ö´ĞĞ³·Ïú²Ù×÷"); // ¼ÇÂ¼µ½ÈÕÖ¾
-            Sleep(1000);                      // Ã¿´Î²Ù×÷Ö®¼äÔİÍ£1Ãë
+            editor.appendLog("æ‰§è¡Œæ’¤é”€æ“ä½œ"); // è®°å½•åˆ°æ—¥å¿—
+            Sleep(1000);                      // æ¯æ¬¡æ“ä½œä¹‹é—´æš‚åœ1ç§’
 
-            // Ä£ÄâÖØ×ö²Ù×÷ Ctrl + Y
+            // æ¨¡æ‹Ÿé‡åšæ“ä½œ Ctrl + Y
             editor.simulateCtrlKey('Y', editor);
-            editor.appendLog("Ö´ĞĞÖØ×ö²Ù×÷"); // ¼ÇÂ¼µ½ÈÕÖ¾
-            Sleep(1000);                      // Ã¿´Î²Ù×÷Ö®¼äÔİÍ£1Ãë
+            editor.appendLog("æ‰§è¡Œé‡åšæ“ä½œ"); // è®°å½•åˆ°æ—¥å¿—
+            Sleep(1000);                      // æ¯æ¬¡æ“ä½œä¹‹é—´æš‚åœ1ç§’
 
-            int executedCount = 0;                                            // ¼ÇÂ¼²Ù×÷´ÎÊı
-            bool operationsExecuted[5] = {false, false, false, false, false}; // ¼ÇÂ¼5¸ö²Ù×÷ÊÇ·ñÒÑÖ´ĞĞ
+            int executedCount = 0;                                            // è®°å½•æ“ä½œæ¬¡æ•°
+            bool operationsExecuted[5] = {false, false, false, false, false}; // è®°å½•5ä¸ªæ“ä½œæ˜¯å¦å·²æ‰§è¡Œ
 
-            while (executedCount < 5) // È·±£ 5¸ö²Ù×÷¶¼Ö´ĞĞ¹ıÒ»´Î
+            while (executedCount < 5) // ç¡®ä¿ 5ä¸ªæ“ä½œéƒ½æ‰§è¡Œè¿‡ä¸€æ¬¡
             {
-                int randomOperation = rand() % 5; // Éú³É 0-4 Ö®¼äµÄËæ»úÊı
+                int randomOperation = rand() % 5; // ç”Ÿæˆ 0-4 ä¹‹é—´çš„éšæœºæ•°
 
-                if (!operationsExecuted[randomOperation]) // Èç¹û¸Ã²Ù×÷ÉĞÎ´Ö´ĞĞ
+                if (!operationsExecuted[randomOperation]) // å¦‚æœè¯¥æ“ä½œå°šæœªæ‰§è¡Œ
                 {
                     switch (randomOperation)
                     {
                     case 0:
                         editor.simulateBackspaceKey(editor);
-                        editor.appendLog("Ö´ĞĞÉ¾³ı²Ù×÷");
+                        editor.appendLog("æ‰§è¡Œåˆ é™¤æ“ä½œ");
                         break;
                     case 1:
                         editor.simulateCtrlKey('C', editor);
-                        editor.appendLog("Ö´ĞĞ¸´ÖÆ²Ù×÷");
+                        editor.appendLog("æ‰§è¡Œå¤åˆ¶æ“ä½œ");
                         break;
                     case 2:
                         editor.simulateCtrlKey('V', editor);
-                        editor.appendLog("Ö´ĞĞÕ³Ìù²Ù×÷");
+                        editor.appendLog("æ‰§è¡Œç²˜è´´æ“ä½œ");
                         break;
                     case 3:
                         editor.simulateCtrlKey('Z', editor);
-                        editor.appendLog("Ö´ĞĞ³·Ïú²Ù×÷");
+                        editor.appendLog("æ‰§è¡Œæ’¤é”€æ“ä½œ");
                         break;
                     case 4:
                         editor.simulateCtrlKey('Y', editor);
-                        editor.appendLog("Ö´ĞĞÖØ×ö²Ù×÷");
+                        editor.appendLog("æ‰§è¡Œé‡åšæ“ä½œ");
                         break;
                     }
-                    operationsExecuted[randomOperation] = true; // ±ê¼Ç¸Ã²Ù×÷ÎªÒÑÖ´ĞĞ
-                    executedCount++;                            // ²Ù×÷´ÎÊı+1
-                    Sleep(1000);                                // Ã¿´Î²Ù×÷Ö®¼äÔİÍ£1Ãë
+                    operationsExecuted[randomOperation] = true; // æ ‡è®°è¯¥æ“ä½œä¸ºå·²æ‰§è¡Œ
+                    executedCount++;                            // æ“ä½œæ¬¡æ•°+1
+                    Sleep(1000);                                // æ¯æ¬¡æ“ä½œä¹‹é—´æš‚åœ1ç§’
                 }
             }
 
-            IsTest = 1;             // Íê³É²âÊÔ²Ù×÷£¬ÇåÆÁÖØĞÂÏÔÊ¾
-            editor.setTestCursor(); // ÒÆ¶¯¹â±êµ½ÊÊµ±Î»ÖÃ
-            // Êä³ö²Ù×÷ÈÕÖ¾
-            cout << "²Ù×÷ÈÕÖ¾:" << endl;
-            cout.write(operationLogs, logIndex);               // ´òÓ¡²Ù×÷ÈÕÖ¾ÄÚÈİ
-            editor.saveLogToFile("operation_log.txt", editor); // ±£´æÈÕÖ¾ÄÚÈİµ½ÎÄ¼ş
-            memset(operationLogs, 0, sizeof(operationLogs));   // ¼õÉÙ²»±ØÒªµÄÏÔÊ¾´íÎó
-            editor.clearTextStack();                           // Çå¿ÕÎÄ±¾Õ»
-            SwitchInputLanguageToEnglish();                    // »»»ØÓ¢ÎÄÊäÈë·¨
-            this_thread::sleep_for(chrono::milliseconds(500)); // ÔİÍ£²âÊÔ£¬·ÀÖ¹Á¬Ğø´¥·¢
+            IsTest = 1;             // å®Œæˆæµ‹è¯•æ“ä½œï¼Œæ¸…å±é‡æ–°æ˜¾ç¤º
+            editor.setTestCursor(); // ç§»åŠ¨å…‰æ ‡åˆ°é€‚å½“ä½ç½®
+            // è¾“å‡ºæ“ä½œæ—¥å¿—
+            cout << "æ“ä½œæ—¥å¿—:" << endl;
+            cout.write(operationLogs, logIndex);               // æ‰“å°æ“ä½œæ—¥å¿—å†…å®¹
+            editor.saveLogToFile("operation_log.txt", editor); // ä¿å­˜æ—¥å¿—å†…å®¹åˆ°æ–‡ä»¶
+            memset(operationLogs, 0, sizeof(operationLogs));   // å‡å°‘ä¸å¿…è¦çš„æ˜¾ç¤ºé”™è¯¯
+            editor.clearTextStack();                           // æ¸…ç©ºæ–‡æœ¬æ ˆ
+            SwitchInputLanguageToEnglish();                    // æ¢å›è‹±æ–‡è¾“å…¥æ³•
+            this_thread::sleep_for(chrono::milliseconds(500)); // æš‚åœæµ‹è¯•ï¼Œé˜²æ­¢è¿ç»­è§¦å‘
         }
-        Sleep(100); // ÉÔ×÷ÑÓ³ÙÒÔ¼õÉÙ CPU Ê¹ÓÃ
+        Sleep(100); // ç¨ä½œå»¶è¿Ÿä»¥å‡å°‘ CPU ä½¿ç”¨
     }
 }
 
-// Ö÷Ñ­»·º¯Êı£¬ÓÃÓÚ´¦Àí¼üÅÌÊäÈëºÍÎÄ±¾²Ù×÷
+// ä¸»å¾ªç¯å‡½æ•°ï¼Œç”¨äºå¤„ç†é”®ç›˜è¾“å…¥å’Œæ–‡æœ¬æ“ä½œ
 void mainLoop(TextEditor &editor)
 {
-    cout << "¼òµ¥ÎÄ±¾±à¼­Æ÷\n\n";
-    cout << "É¾³ı(Backspace), ¸´ÖÆ(Ctrl+C), Õ³Ìù(Ctrl+V), ³·Ïú²Ù×÷(Ctrl+Z), ÖØ×ö²Ù×÷(Ctrl+Y), ²âÊÔ(F1), ÍË³ö(Esc)" << endl;
-    cout << "°´ÏÂÈÎÒâ¼ü¼ÌĞø";
+    cout << "ç®€å•æ–‡æœ¬ç¼–è¾‘å™¨\n\n";
+    cout << "åˆ é™¤(Backspace), å¤åˆ¶(Ctrl+C), ç²˜è´´(Ctrl+V), æ’¤é”€æ“ä½œ(Ctrl+Z), é‡åšæ“ä½œ(Ctrl+Y), æµ‹è¯•(F1), é€€å‡º(Esc)" << endl;
+    cout << "æŒ‰ä¸‹ä»»æ„é”®ç»§ç»­";
     _getch();
-    // ÇåÆÁÖØĞÂÏÔÊ¾
+    // æ¸…å±é‡æ–°æ˜¾ç¤º
     system("cls");
     editor.displayText();
     while (running)
     {
-        char ch = _getch(); // ²¶»ñÓÃ»§ÊäÈëµÄ×Ö·û
+        char ch = _getch(); // æ•è·ç”¨æˆ·è¾“å…¥çš„å­—ç¬¦
 
         if (ch == 27)
-        {                    // °´ÏÂ ESC ¼üÍË³ö
-            running = false; // Í£Ö¹ËùÓĞÏß³Ì
+        {                    // æŒ‰ä¸‹ ESC é”®é€€å‡º
+            running = false; // åœæ­¢æ‰€æœ‰çº¿ç¨‹
             break;
         }
-        else if (ch == 8) // °´ÏÂ Backspace ¼üÉ¾³ı×Ö·û
+        else if (ch == 8) // æŒ‰ä¸‹ Backspace é”®åˆ é™¤å­—ç¬¦
         {
-            if (!editor.deleteChar()) // ÅĞ¶ÏÄÜ·ñ¼ÌĞøÉ¾³ı
+            if (!editor.deleteChar()) // åˆ¤æ–­èƒ½å¦ç»§ç»­åˆ é™¤
             {
-                editor.showErrorWithDelay("ÎŞ·¨É¾³ı£¬ÎÄ±¾Îª¿Õ£¡", 1000); // ÏÔÊ¾´íÎóĞÅÏ¢²¢ÑÓ³Ù
+                editor.showErrorWithDelay("æ— æ³•åˆ é™¤ï¼Œæ–‡æœ¬ä¸ºç©ºï¼", 1000); // æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯å¹¶å»¶è¿Ÿ
             }
-            system("cls"); // ÇåÆÁ
+            system("cls"); // æ¸…å±
         }
-        else if (ch == 26) // °´ÏÂ Ctrl+Z ³·Ïú²Ù×÷
+        else if (ch == 26) // æŒ‰ä¸‹ Ctrl+Z æ’¤é”€æ“ä½œ
         {
-            editor.undo(); // µ÷ÓÃ³·Ïúº¯Êı
-            system("cls"); // ÇåÆÁ
+            editor.undo(); // è°ƒç”¨æ’¤é”€å‡½æ•°
+            system("cls"); // æ¸…å±
         }
-        else if (ch == 25) // °´ÏÂ Ctrl+Y ÖØ×ö²Ù×÷
+        else if (ch == 25) // æŒ‰ä¸‹ Ctrl+Y é‡åšæ“ä½œ
         {
-            editor.redo(); // µ÷ÓÃÖØ×öº¯Êı
-            system("cls"); // ÇåÆÁ
+            editor.redo(); // è°ƒç”¨é‡åšå‡½æ•°
+            system("cls"); // æ¸…å±
         }
-        else if (ch == 3) // °´ÏÂ Ctrl+C ¸´ÖÆ²Ù×÷
+        else if (ch == 3) // æŒ‰ä¸‹ Ctrl+C å¤åˆ¶æ“ä½œ
         {
-            editor.copy(); // µ÷ÓÃ¸´ÖÆº¯Êı
-            system("cls"); // ÇåÆÁ
+            editor.copy(); // è°ƒç”¨å¤åˆ¶å‡½æ•°
+            system("cls"); // æ¸…å±
         }
-        else if (ch == 22) // °´ÏÂ Ctrl+V Õ³Ìù²Ù×÷
+        else if (ch == 22) // æŒ‰ä¸‹ Ctrl+V ç²˜è´´æ“ä½œ
         {
-            editor.paste(); // µ÷ÓÃÕ³Ìùº¯Êı
-            system("cls");  // ÇåÆÁ
+            editor.paste(); // è°ƒç”¨ç²˜è´´å‡½æ•°
+            system("cls");  // æ¸…å±
         }
 
-        else if (isprint(ch)) // Èç¹ûÊÇ¿É´òÓ¡×Ö·û
+        else if (isprint(ch)) // å¦‚æœæ˜¯å¯æ‰“å°å­—ç¬¦
         {
-            editor.insertChar(ch);
+            editor.insertChar(ch); // è°ƒç”¨æ’å…¥å­—ç¬¦å‡½æ•°
         }
 
-        editor.displayText(); // ÏÔÊ¾µ±Ç°µÄÎÄ±¾ÄÚÈİ
+        editor.displayText(); // æ˜¾ç¤ºå½“å‰çš„æ–‡æœ¬å†…å®¹
     }
 }
 
-// Ö÷³ÌĞò
+// ä¸»ç¨‹åº
 int main()
 {
-    RunAsAdmin();
-    SwitchInputLanguageToEnglish();              // ÇĞ»»Ó¢ÎÄÊäÈë·¨
-    SetConsoleCtrlHandler(ConsoleHandler, TRUE); // ÉèÖÃ¿ØÖÆÌ¨¿ØÖÆ´¦Àí³ÌĞò
+    RunAsAdmin();                                // ä»¥ç®¡ç†å‘˜èº«ä»½è¿è¡Œ
+    SwitchInputLanguageToEnglish();              // åˆ‡æ¢è‹±æ–‡è¾“å…¥æ³•
+    SetConsoleCtrlHandler(ConsoleHandler, TRUE); // è®¾ç½®æ§åˆ¶å°æ§åˆ¶å¤„ç†ç¨‹åº
 
-    TextEditor editor; // ´´½¨ÎÄ±¾±à¼­Æ÷ÊµÀı
+    TextEditor editor; // åˆ›å»ºæ–‡æœ¬ç¼–è¾‘å™¨å®ä¾‹
 
-    thread testThread(runTest, ref(editor));  // Æô¶¯²âÊÔ¹¦ÄÜÏß³Ì
-    thread mainThread(mainLoop, ref(editor)); // Æô¶¯Ö÷½ø³Ì
+    thread testThread(runTest, ref(editor));  // å¯åŠ¨æµ‹è¯•åŠŸèƒ½çº¿ç¨‹
+    thread mainThread(mainLoop, ref(editor)); // å¯åŠ¨ä¸»è¿›ç¨‹
 
-    testThread.join(); // µÈ´ı²âÊÔÏß³Ì½áÊø
-    mainThread.join(); // µÈ´ıÖ÷½ø³Ì½áÊø
+    testThread.join(); // ç­‰å¾…æµ‹è¯•çº¿ç¨‹ç»“æŸ
+    mainThread.join(); // ç­‰å¾…ä¸»è¿›ç¨‹ç»“æŸ
 
     return 0;
 }
