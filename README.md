@@ -39,3 +39,6 @@ These programs are coded by Chen Sixiang.
    其中 `symbol()` 用于模拟键盘按键事件来输入字符和符号，在 `ou.cpp` 中调用编译生成程序。
 - 特殊符号（如感叹号、冒号、问号等）需要按下 Shift 键来生成，因此在代码中有对应的 Shift 键按下和释放逻辑。
 - 对于数字、小写字母、大写字母，程序分别根据 ASCII 码范围进行判断并触发相应的按键事件。
+
+6. **程序截图**
+![1](https://github.com/user-attachments/assets/57c47684-fb99-4938-803e-6454b59136f0)
