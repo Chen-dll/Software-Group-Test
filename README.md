@@ -13,6 +13,9 @@ These programs are coded by Chen Sixiang.
 - [点击这里跳转到文本编辑器分支](https://github.com/Chen-dll/Software-Group-Test/tree/Editor)
 - [点击这里跳转到文本编辑器发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-3)
 
+# 学习笔记
+- [点击这里跳转到学习笔记](https://github.com/Chen-dll/Software-Group-Test/tree/Notes)
+
 # 计时器
 - [点击这里跳转到计时器分支](https://github.com/Chen-dll/Software-Group-Test/tree/Timer)
 - [点击这里跳转到计时器发行](https://github.com/Chen-dll/Software-Group-Test/releases/tag/Project-4)
