@@ -19,8 +19,7 @@ int main()
     // 访问数组元素
     for (i = 0; i < 5; i++) 
     {
-        printf("Element at index %d: %d
-", i, arr[i]);
+        printf("Element at index %d: %d", i, arr[i]);
     }
 
     return 0;
@@ -119,8 +118,7 @@ void push(int data)
 {
     if (top >= MAX - 1) 
     {
-        printf("Stack Overflow
-");
+        printf("Stack Overflow");
         return;
     }
     stack[++top] = data;
@@ -130,8 +128,7 @@ int pop()
 {
     if (top < 0) 
     {
-        printf("Stack Underflow
-");
+        printf("Stack Underflow");
         return -1;
     }
     return stack[top--];
@@ -141,8 +138,7 @@ int peek()
 {
     if (top < 0) 
     {
-        printf("Stack is Empty
-");
+        printf("Stack is Empty");
         return -1;
     }
     return stack[top];
@@ -152,10 +148,8 @@ int main()
 {
     push(10);
     push(20);
-    printf("Top element: %d
-", peek());
-    printf("Popped element: %d
-", pop());
+    printf("Top element: %d", peek());
+    printf("Popped element: %d", pop());
     return 0;
 }
 ```
@@ -179,8 +173,7 @@ void enqueue(int data)
 {
     if (rear == MAX - 1) 
     {
-        printf("Queue Overflow
-");
+        printf("Queue Overflow");
         return;
     }
     if (front == -1) front = 0;
@@ -191,8 +184,7 @@ int dequeue()
 {
     if (front == -1 || front > rear) 
     {
-        printf("Queue Underflow
-");
+        printf("Queue Underflow");
         return -1;
     }
     return queue[front++];
@@ -202,8 +194,7 @@ int main()
 {
     enqueue(10);
     enqueue(20);
-    printf("Dequeued: %d
-", dequeue());
+    printf("Dequeued: %d", dequeue());
     return 0;
 }
 ```
@@ -284,8 +275,7 @@ void printGraph(int graph[V][V])
         {
             printf("%d ", graph[i][j]);
         }
-        printf("
-");
+        printf(＂ ");
     }
 }
 
