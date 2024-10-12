@@ -155,7 +155,7 @@ int main()
 ```
 
 ## 4. 队列 (Queue)
-- **定义**: 先进先出 (FIFO) 的数据结构。数据从一端进入，另一端取出。
+- **定义**: 先进先出的数据结构。数据从一端进入，另一端取出。
 - **基本操作**:
   - `enqueue`: 将元素加入队列
   - `dequeue`: 从队列中取出元素
@@ -195,100 +195,6 @@ int main()
     enqueue(10);
     enqueue(20);
     printf("Dequeued: %d", dequeue());
-    return 0;
-}
-```
-
-## 5. 树 (Tree)
-- **定义**: 树是节点的层次型数据结构，每个节点包含数据和子节点。
-- **类型**:
-  - 二叉树 (Binary Tree)
-  - 二叉搜索树 (Binary Search Tree, BST)
-  - 堆 (Heap)
-- **特点**: 适合表示层次关系的数据，如文件系统。
-
-**二叉搜索树插入操作**:
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-struct Node 
-{
-    int data;
-    struct Node* left;
-    struct Node* right;
-};
-
-struct Node* createNode(int data) 
-{
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = data;
-    newNode->left = newNode->right = NULL;
-    return newNode;
-}
-
-struct Node* insert(struct Node* root, int data) 
-{
-    if (root == NULL) return createNode(data);
-    if (data < root->data) root->left = insert(root->left, data);
-    else if (data > root->data) root->right = insert(root->right, data);
-    return root;
-}
-
-void inorder(struct Node* root) 
-{
-    if (root == NULL) return;
-    inorder(root->left);
-    printf("%d ", root->data);
-    inorder(root->right);
-}
-
-int main() 
-{
-    struct Node* root = NULL;
-    root = insert(root, 50);
-    insert(root, 30);
-    insert(root, 70);
-    inorder(root);
-    return 0;
-}
-```
-
-## 6. 图 (Graph)
-- **定义**: 由顶点和边组成的数据结构，表示对象之间的关系。
-- **表示方法**:
-  - 邻接矩阵 (Adjacency Matrix)
-  - 邻接表 (Adjacency List)
-- **特点**: 适合表示网络、路径等多对多关系。
-
-**邻接矩阵表示图**:
-```c
-#include <stdio.h>
-
-#define V 4
-
-void printGraph(int graph[V][V]) 
-{
-    for (int i = 0; i < V; i++) 
-    {
-        for (int j = 0; j < V; j++) 
-        {
-            printf("%d ", graph[i][j]);
-        }
-        printf(＂ ");
-    }
-}
-
-int main() 
-{
-    int graph[V][V] = 
-    {
-        {0, 1, 0, 0},
-        {1, 0, 1, 1},
-        {0, 1, 0, 1},
-        {0, 1, 1, 0}
-    };
-    printGraph(graph);
     return 0;
 }
 ```
