@@ -11,12 +11,14 @@
 ```c
 #include <stdio.h>
 
-int main() {
+int main() 
+{
     int arr[5] = {10, 20, 30, 40, 50}; // 声明并初始化数组
     int i;
 
     // 访问数组元素
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 5; i++) 
+    {
         printf("Element at index %d: %d
 ", i, arr[i]);
     }
@@ -42,13 +44,15 @@ int main() {
 #include <stdlib.h>
 
 // 定义链表节点
-struct Node {
+struct Node 
+{
     int data;
     struct Node* next;
 };
 
 // 创建新节点
-struct Node* createNode(int data) {
+struct Node* createNode(int data) 
+{
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = data;
     newNode->next = NULL;
@@ -56,22 +60,27 @@ struct Node* createNode(int data) {
 }
 
 // 插入节点到链表末尾
-void appendNode(struct Node** head, int data) {
+void appendNode(struct Node** head, int data) 
+{
     struct Node* newNode = createNode(data);
-    if (*head == NULL) {
+    if (*head == NULL) 
+    {
         *head = newNode;
         return;
     }
     struct Node* temp = *head;
-    while (temp->next != NULL) {
+    while (temp->next != NULL) 
+    {
         temp = temp->next;
     }
     temp->next = newNode;
 }
 
 // 打印链表
-void printList(struct Node* head) {
-    while (head != NULL) {
+void printList(struct Node* head) 
+{
+    while (head != NULL) 
+    {
         printf("%d -> ", head->data);
         head = head->next;
     }
@@ -79,7 +88,8 @@ void printList(struct Node* head) {
 ");
 }
 
-int main() {
+int main() 
+{
     struct Node* head = NULL;
     appendNode(&head, 10);
     appendNode(&head, 20);
@@ -105,8 +115,10 @@ int main() {
 int stack[MAX];
 int top = -1;
 
-void push(int data) {
-    if (top >= MAX - 1) {
+void push(int data) 
+{
+    if (top >= MAX - 1) 
+    {
         printf("Stack Overflow
 ");
         return;
@@ -114,8 +126,10 @@ void push(int data) {
     stack[++top] = data;
 }
 
-int pop() {
-    if (top < 0) {
+int pop() 
+{
+    if (top < 0) 
+    {
         printf("Stack Underflow
 ");
         return -1;
@@ -123,8 +137,10 @@ int pop() {
     return stack[top--];
 }
 
-int peek() {
-    if (top < 0) {
+int peek() 
+{
+    if (top < 0) 
+    {
         printf("Stack is Empty
 ");
         return -1;
@@ -132,7 +148,8 @@ int peek() {
     return stack[top];
 }
 
-int main() {
+int main() 
+{
     push(10);
     push(20);
     printf("Top element: %d
@@ -158,8 +175,10 @@ int main() {
 int queue[MAX];
 int front = -1, rear = -1;
 
-void enqueue(int data) {
-    if (rear == MAX - 1) {
+void enqueue(int data) 
+{
+    if (rear == MAX - 1) 
+    {
         printf("Queue Overflow
 ");
         return;
@@ -168,8 +187,10 @@ void enqueue(int data) {
     queue[++rear] = data;
 }
 
-int dequeue() {
-    if (front == -1 || front > rear) {
+int dequeue() 
+{
+    if (front == -1 || front > rear) 
+    {
         printf("Queue Underflow
 ");
         return -1;
@@ -177,7 +198,8 @@ int dequeue() {
     return queue[front++];
 }
 
-int main() {
+int main() 
+{
     enqueue(10);
     enqueue(20);
     printf("Dequeued: %d
@@ -199,34 +221,39 @@ int main() {
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
+struct Node 
+{
     int data;
     struct Node* left;
     struct Node* right;
 };
 
-struct Node* createNode(int data) {
+struct Node* createNode(int data) 
+{
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = data;
     newNode->left = newNode->right = NULL;
     return newNode;
 }
 
-struct Node* insert(struct Node* root, int data) {
+struct Node* insert(struct Node* root, int data) 
+{
     if (root == NULL) return createNode(data);
     if (data < root->data) root->left = insert(root->left, data);
     else if (data > root->data) root->right = insert(root->right, data);
     return root;
 }
 
-void inorder(struct Node* root) {
+void inorder(struct Node* root) 
+{
     if (root == NULL) return;
     inorder(root->left);
     printf("%d ", root->data);
     inorder(root->right);
 }
 
-int main() {
+int main() 
+{
     struct Node* root = NULL;
     root = insert(root, 50);
     insert(root, 30);
@@ -249,9 +276,12 @@ int main() {
 
 #define V 4
 
-void printGraph(int graph[V][V]) {
-    for (int i = 0; i < V; i++) {
-        for (int j = 0; j < V; j++) {
+void printGraph(int graph[V][V]) 
+{
+    for (int i = 0; i < V; i++) 
+    {
+        for (int j = 0; j < V; j++) 
+        {
             printf("%d ", graph[i][j]);
         }
         printf("
@@ -259,8 +289,10 @@ void printGraph(int graph[V][V]) {
     }
 }
 
-int main() {
-    int graph[V][V] = {
+int main() 
+{
+    int graph[V][V] = 
+    {
         {0, 1, 0, 0},
         {1, 0, 1, 1},
         {0, 1, 0, 1},
