@@ -43,7 +43,7 @@ void setfillcolor(COLORREF color);
 - **功能**：设置填充颜色，用于之后的填充图形操作。
 - **参数**：
   - `color`: 填充颜色，使用 RGB 颜色值。
-- **示例**：
+- **例子**：
 ```cpp
 setfillcolor(RED);
 ```
@@ -53,7 +53,7 @@ setfillcolor(RED);
 void solidrectangle(int left, int top, int right, int bottom);
 ```
 - **功能**：绘制一个实心矩形，矩形的左上角坐标为 `(left, top)`，右下角坐标为 `(right, bottom)`，使用当前的填充颜色进行填充。
-- **示例**：
+- **例子**：
 ```cpp
 solidrectangle(100, 100, 200, 200);
 ```
@@ -62,10 +62,10 @@ solidrectangle(100, 100, 200, 200);
 ```cpp
 void setbkmode(int mode);
 ```
-- **功能**：设置背景模式，可以选择是否将背景设置为透明或使用当前的背景色填充背景。
+- **功能**：设置背景模式，可以选择将背景设置为透明或使用当前的背景色填充背景。
 - **参数**：
   - `mode`: 取值 `TRANSPARENT`（透明背景）或 `OPAQUE`（不透明背景）。
-- **示例**：
+- **例子**：
 ```cpp
 setbkmode(TRANSPARENT);
 ```
@@ -77,7 +77,7 @@ void settextcolor(COLORREF color);
 - **功能**：设置文本颜色。
 - **参数**：
   - `color`: 文本颜色，使用 RGB 颜色值。
-- **示例**：
+- **例子**：
 ```cpp
 settextcolor(BLUE);
 ```
@@ -91,9 +91,9 @@ void settextstyle(int height, int width, const TCHAR* face);
   - `height`: 字体的高度。
   - `width`: 字体的宽度（如果宽度设置为 0，系统将根据高度自动计算宽度）。
   - `face`: 字体名称。
-- **示例**：
+- **例子**：
 ```cpp
-settextstyle(20, 0, _T("Arial"));
+settextstyle(20, 0, _T("CSX"));
 ```
 #### `outtextxy()`
 ```cpp
@@ -104,16 +104,16 @@ void outtextxy(int x, int y, const TCHAR* str);
   - `x`: 文本输出的起始横坐标。
   - `y`: 文本输出的起始纵坐标。
   - `str`: 要输出的文本字符串。
-- **示例**：
+- **例子**：
 ```cpp
-outtextxy(100, 100, _T("Hello EasyX"));
+outtextxy(100, 100, _T("Hello World"));
 ```
 #### `cleardevice()`
 ```cpp
 void cleardevice();
 ```
-- **功能**：清除当前窗口的所有图像内容，使用背景色进行填充。通常用于刷新屏幕。
-- **示例**：
+- **功能**：清除当前窗口的所有图像内容，使用背景色进行填充, 用于刷新屏幕。
+- **例子**：
 ```cpp
 cleardevice();
 ```
@@ -127,7 +127,7 @@ cleardevice();
 char _getch();
 ```
 - **功能**：等待并获取键盘输入字符。
-- **示例**：
+- **例子**：
 ```cpp
 char key = _getch();
 ```
@@ -137,7 +137,7 @@ char key = _getch();
 MOUSEMSG getmouse();
 ```
 - **功能**：获取鼠标消息，如鼠标点击、移动等。
-- **示例**：
+- **例子**：
 ```cpp
 MOUSEMSG msg = getmouse();
 ```
