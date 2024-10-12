@@ -165,7 +165,7 @@ int main()
 ### 4.双缓冲技术
 
 #### 函数介绍
-`BeginBatchDraw()` 和 `EndBatchDraw()` 是 EasyX 图形库中用于批量绘图的一个函数。作用是在进行大量绘图操作时，提升绘制效率，减少屏幕闪烁。
+`BeginBatchDraw()` 和 `EndBatchDraw()` 是 EasyX 图形库中用于批量绘图的一个函数。作用是在进行大量绘图操作时，提升绘制效率，减少屏幕闪烁。  
 `FlashBatchDraw()` 是 EasyX 中用于将内存中的图形刷新到屏幕上的函数。用于在使用 `BeginBatchDraw()` 和 `EndBatchDraw()` 进行批量绘图时，进行局部的更新。
 
 #### 使用步骤
