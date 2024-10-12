@@ -90,7 +90,88 @@ void RunAsAdmin()
         TerminateProcess(GetCurrentProcess(), 0);
     }
 ```
+## 模拟键盘事件
 
+### 模拟键盘按键事件的函数
+```cpp
+    void simulateKey(WORD virtualKey, bool isPress)
+    {
+        INPUT input = {0};           // 初始化输入结构体
+        input.type = INPUT_KEYBOARD; // 表示该输入事件是一个键盘事件
+        input.ki.wVk = virtualKey;   // 设置虚拟按键码
+
+        input.ki.dwFlags = isPress ? 0 : KEYEVENTF_KEYUP; // 判断是按下还是释放
+        // 如果 isPress 为 true，则设置为 0，表示按下事件
+        // 如果 isPress 为 false，则设置为 KEYEVENTF_KEYUP，表示释放事件
+
+        SendInput(1, &input, sizeof(INPUT)); // 发送输入事件
+
+        // 为了观察效果，添加一些延迟
+        Sleep(100);
+    }
+```
+### 模拟文本输入，区分大小写字母
+```cpp
+    void simulateTextInput(const string &text, TextEditor &editor)
+    {
+        for (size_t i = 0; i < text.size(); ++i) // 遍历随机生成的字符串
+        {
+            char ch = text[i];
+            bool isUpperCase = isupper(ch);    // 判断是否是大写字母
+            SHORT vk = VkKeyScan(tolower(ch)); // 获取对应的小写字母虚拟按键码
+            BYTE vkCode = LOBYTE(vk);          // 提取虚拟按键码
+
+            // 如果是大写字母，先按住 Shift 键
+            if (isUpperCase)
+            {
+                simulateKey(VK_SHIFT, true); // 按下 Shift 键
+            }
+
+            showOperationWithDelay("模拟按键输入: " + string(1, ch), 500); // 显示操作信息
+            appendLog("模拟按键输入: " + string(1, ch));                   // 将按键输入记录到日志
+            simulateKey(vkCode, true);                                     // 按下按键
+            Sleep(100);                                                    // 延迟，观察输入效果
+            simulateKey(vkCode, false);                                    // 释放按键
+
+            // 如果是大写字母，释放 Shift 键
+            if (isUpperCase)
+            {
+                simulateKey(VK_SHIFT, false); // 释放Shift键
+            }
+            Sleep(100); // 在每个字符之间添加延迟
+        }
+    }
+```
+### 模拟Backspace键
+```cpp
+    void simulateBackspaceKey(TextEditor &editor)
+    {
+        showOperationWithDelay("模拟按下Backspace键", 1000); // 提示信息
+        appendLog("按下Backspace键");
+        simulateKey(VK_BACK, true);  // 按下Backspace键
+        Sleep(100);                  // 延迟
+        simulateKey(VK_BACK, false); // 释放Backspace键
+        Sleep(100);                  // 延迟
+    }
+```
+### 模拟 Ctrl + 指定按键 (例如 Ctrl + Z, Ctrl + C)
+```cpp
+ void simulateCtrlKey(WORD key, TextEditor &editor)
+    {
+        showOperationWithDelay("模拟按下Ctrl + " + string(1, key), 1000); // 提示信息
+        appendLog("按下Ctrl + " + string(1, key));                        // 写进操作日志
+
+        // 按下Ctrl键
+        simulateKey(VK_CONTROL, true);
+        // 按下指定键
+        simulateKey(key, true);
+        Sleep(100);              // 延迟
+        simulateKey(key, false); // 释放指定键
+        Sleep(100);              // 延迟
+        // 释放Ctrl键
+        simulateKey(VK_CONTROL, false);
+    }
+```
 ## 多线程
 - 实现主循环函数 (处理键盘输入和文本操作) 和测试函数同时进行，测试函数监测按下 F1 按键的动作，按下后进入测试内容。
 - 多线程进行使得测试的每步操作文本编辑器都能实时处理显示。
