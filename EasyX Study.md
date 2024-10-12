@@ -113,10 +113,6 @@ outtextxy(100, 100, _T("Hello World"));
 void cleardevice();
 ```
 - **功能**：清除当前窗口的所有图像内容，使用背景色进行填充, 用于刷新屏幕。
-- **例子**：
-```cpp
-cleardevice();
-```
 
 ---
 
