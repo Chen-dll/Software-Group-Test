@@ -6,7 +6,7 @@ EasyX 是一个专为 C++ 设计的简单的图形库。
 
 ### 环境搭建
 - 使用 Visual Studio 或者 Dev-C++
-- 在 EasyX 图形库官网下载
+- 在 EasyX 图形库官网下载 [点击这里跳转到EasyX官网](https://easyx.cn/)
 - 添加 EasyX 图形库路径到 include 和 lib 目录中
 - VS 项目配置属性字符集要使用多字节字符集
 
