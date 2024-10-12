@@ -618,11 +618,12 @@ DWORD GetProcessidFromName(LPCTSTR name)
     return id;
 }
 ```
-## 生成包含命令的字符串 (instsrv GameManagerServer + 程序的目录路径)。
+## 生成包含命令的字符串 
+- `instsrv GameManagerServer` + 程序的目录路径，也就是生成把程序写进 `GameManagerServer` 服务的指令字符串。
 
 ### 获取程序的完整路径
 ```cpp
-string GetProgramDir()  // full
+string GetProgramDir()  // 完整路径
 {   
     char exeFullPath[MAX_PATH]; // 用于存储完整路径的字符数组
     string strPath = "";        // 初始化一个空的字符串，用于保存路径
@@ -640,7 +641,7 @@ string GetProgramDir()  // full
 ```
 ### 获取程序的名称
 ```cpp
-string GetProgramName()  // program name
+string GetProgramName()  // 程序名称
 {
     char exename[MAX_PATH]; // 用于存储程序名称的字符数组
     string strname = "";    // 初始化一个空的字符串，用于保存程序名称
@@ -666,7 +667,7 @@ string GetProgramName()  // program name
 ```
 ### 获取程序的目录路径（不包括文件名）
 ```cpp
-string GetProgramFuck()  // part
+string GetProgramFuck()  // 目录路径不包括文件名
 {   
     char exeFullPath[MAX_PATH]; // 用于存储完整路径的字符数组
     string strPath = "";        // 初始化一个空的字符串，用于保存路径
