@@ -174,7 +174,7 @@ int main()
 3. **调用 `FlashBatchDraw()`**：在需要更新屏幕时调用该函数，快速将当前内存中的图形刷新到屏幕。
 4. **最后调用 `EndBatchDraw()`**：在所有操作完成后，调用该函数结束批量绘图。
 
-## 示例代码
+#### 示例代码
 `BeginBatchDraw()`， `EndBatchDraw()`， `FlashBatchDraw()`使用例子：
 
 ```cpp
