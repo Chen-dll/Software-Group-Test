@@ -140,13 +140,14 @@ MOUSEMSG msg = getmouse();
 
 ---
 
-### 3. 示例代码
+#### 示例代码
 
 ```cpp
 #include <graphics.h>
 #include <conio.h>
 
-int main() {
+int main()
+{
     initgraph(640, 480);   // 初始化图形窗口
 
     setfillcolor(RED);     // 设置填充颜色
@@ -161,5 +162,46 @@ int main() {
     return 0;
 }
 ```
+### 4.双缓冲技术
 
----
+#### 函数介绍
+`BeginBatchDraw()` 和 `EndBatchDraw()` 是 EasyX 图形库中用于批量绘图的一个函数。作用是在进行大量绘图操作时，提升绘制效率，减少屏幕闪烁。
+`FlashBatchDraw()` 是 EasyX 中用于将内存中的图形刷新到屏幕上的函数。用于在使用 `BeginBatchDraw()` 和 `EndBatchDraw()` 进行批量绘图时，进行局部的更新。
+
+#### 使用步骤
+1. **调用 `BeginBatchDraw()`**：在开始绘制图形之前，先调用这个函数。
+2. **执行绘图操作**：在 `BeginBatchDraw()` 和 `FlashBatchDraw()` 之间执行所有的绘图操作。
+3. **调用 `FlashBatchDraw()`**：在需要更新屏幕时调用该函数，快速将当前内存中的图形刷新到屏幕。
+4. **最后调用 `EndBatchDraw()`**：在所有操作完成后，调用该函数结束批量绘图。
+
+## 示例代码
+`BeginBatchDraw()`， `EndBatchDraw()`， `FlashBatchDraw()`使用例子：
+
+```cpp
+
+#include <graphics.h>
+#include <conio.h>
+
+int main()
+{
+    initgraph(640, 480); // 初始化图形窗口
+    BeginBatchDraw(); // 开始批量绘图
+
+    // 绘制初始图形
+    setfillcolor(RED);
+    fillrectangle(50, 50, 200, 200); // 绘制红色矩形
+    FlashBatchDraw(); // 刷新屏幕以显示初始图形
+
+    // 绘制新的图形
+    setfillcolor(GREEN);
+    fillcircle(300, 150, 50); // 绘制绿色圆形
+    FlashBatchDraw(); // 刷新屏幕以显示更新后的图形
+
+    // 等待用户关闭窗口
+    _getch();
+    EndBatchDraw(); // 结束批量绘图
+    closegraph(); // 关闭图形窗口
+    return 0;
+}
+
+```
