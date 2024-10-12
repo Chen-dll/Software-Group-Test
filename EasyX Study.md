@@ -154,8 +154,8 @@ int main()
     solidrectangle(100, 100, 300, 200); // 绘制一个实心矩形
 
     settextcolor(BLUE);    // 设置文本颜色
-    settextstyle(30, 0, _T("Arial")); // 设置字体样式
-    outtextxy(150, 150, _T("Hello EasyX")); // 输出文本
+    settextstyle(30, 0, _T("CSX")); // 设置字体样式
+    outtextxy(150, 150, _T("Hello World")); // 输出文本
 
     _getch();               // 等待用户输入
     closegraph();          // 关闭图形窗口
