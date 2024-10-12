@@ -107,6 +107,7 @@ These programs are coded by Chen Sixiang.
      - 以此类推，达到顺时针旋转90°的操作。
 - `2048 show 草稿.cpp` 里面主要在调试，尝试优化未果orz，软件组懂双缓冲技术的大佬教教我吧%%%，最终代码是 `2048 show.cpp`，后续考虑加入显示历史最高成绩的功能，再试试优化代码逻辑和图像显示。
 - 运行结束完记得切换输入法
+- 最近了解到三个函数可用来实现双缓冲，有时间加入代码调试。
 
 ### 7. **程序截图**
 ![4](https://github.com/user-attachments/assets/e8d4bac0-7707-416f-9053-c05ecd65baff)  
