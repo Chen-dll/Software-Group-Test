@@ -84,8 +84,7 @@ void printList(struct Node* head)
         printf("%d -> ", head->data);
         head = head->next;
     }
-    printf("NULL
-");
+    printf("NULL");
 }
 
 int main() 
