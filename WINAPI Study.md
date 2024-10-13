@@ -3,7 +3,7 @@
 - 也是本人对曾经和最近学习的 `WINAPI` 内容的总结
 
 ## 切换输入法
-- ver.1 (EasyX界面与控制台窗口)
+- **ver.1** (EasyX界面与控制台窗口)
 ```cpp
 // 切换英文输入法 
 void SwitchToEnglish() 
@@ -25,7 +25,7 @@ void SwitchToEnglish()
     SetForegroundWindow(easyxWindow); // 再换回去EasyX的窗口 
 }
 ```
-- ver.2 (仅控制台窗口)
+- **ver.2** (仅控制台窗口)
 - 切换英文输入法
 ```cpp
 void SwitchInputLanguageToEnglish()
