@@ -114,6 +114,78 @@ void cleardevice();
 ```
 - **功能**：清除当前窗口的所有图像内容，使用背景色进行填充, 用于刷新屏幕。
 
+#### 2048游戏板绘制
+```cpp
+void draw_board(int should_clear) 
+{
+    // 状态改变才清屏 缓解闪屏问题 
+    if (should_clear) 
+    {
+        setfillcolor(RGB(187, 173, 160)); // 设置背景颜色
+        solidrectangle(0, 0, 400, 400); // 填充背景
+    }
+
+    for (int i = 0; i < SIZE; i++) 
+    {
+        for (int j = 0; j < SIZE; j++) 
+        {
+            int number = board[i][j];
+            int x = j * 100 + 10; // 每个格子的 x 坐标
+            int y = i * 100 + 10; // 每个格子的 y 坐标
+
+            // 根据数字设置不同的颜色
+            if (number == 0) {
+                setfillcolor(RGB(205, 193, 180)); // 空格子的颜色
+            } else if (number == 2) {             // 2 的 颜色 
+                setfillcolor(RGB(238, 228, 218));  
+            } else if (number == 4) {             // 4 的 颜色 
+                setfillcolor(RGB(237, 224, 200));
+            } else if (number == 8) {             // 8 的 颜色 
+                setfillcolor(RGB(242, 177, 121));
+            } else if (number == 16) {            // 16 的 颜色 
+                setfillcolor(RGB(245, 149, 99));
+            } else if (number == 32) {            // 32 的 颜色 
+                setfillcolor(RGB(246, 124, 95));
+            } else if (number == 64) {            // 64 的 颜色 
+                setfillcolor(RGB(246, 94, 59));
+            } else if (number == 128) {           // 128 的 颜色 
+                setfillcolor(RGB(237, 207, 114));
+            } else if (number == 256) {           // 256 的 颜色 
+                setfillcolor(RGB(237, 204, 97));
+            } else if (number == 512) {           // 512 的 颜色 
+                setfillcolor(RGB(237, 200, 80));
+            } else if (number == 1024) {          // 1024 的 颜色 
+                setfillcolor(RGB(237, 197, 63));
+            } else if (number == 2048) {          // 2048 的 颜色 
+                setfillcolor(RGB(237, 194, 46));
+            }
+
+            // 绘制每个格子
+            solidrectangle(x, y, x + 80, y + 80);
+
+            // 绘制数字
+            if (number != 0) 
+            {
+                char num_str[5];
+                snprintf(num_str, sizeof(num_str), "%d", number); // 使用 snprintf 更加安全 将整形转为字符串
+                setbkmode(TRANSPARENT); // 设置透明背景
+                settextstyle(30, 0, "Consolas"); // 设置字体
+                settextcolor(RGB(119, 110, 101)); // 设置文本颜色
+                int text_width = textwidth(num_str);
+                int text_height = textheight(num_str);
+                outtextxy(x + (80 - text_width) / 2, y + (80 - text_height) / 2, num_str); // 居中显示 
+            }
+        }
+    }
+
+    // 绘制得分
+    char score_str[20];
+    snprintf(score_str, sizeof(score_str), "Score: %d", score);
+    settextcolor(BLACK);
+    outtextxy(10, 10, score_str); // 在左上角显示得分
+}
+```
+
 ---
 
 ### 3. 输入与交互
